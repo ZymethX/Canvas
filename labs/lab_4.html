@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Лабораторная работа 4</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/main.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/tables.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/tabs.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/component.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/example.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Cardo" rel="stylesheet">
+
+	<script src="../sources/js/modernizr.custom.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<style>
+		canvas#canvas {
+			background-color: #1C1E20;
+			border-radius: 20px;
+			margin: 20px auto 0px;
+			max-width: 80%;	
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<ul id="gn-menu" class="gn-menu-main">
+			<li class="gn-trigger">
+				<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+				<nav class="gn-menu-wrapper">
+					<div class="tabs">
+						<input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
+						<label for="tab-btn-1">Меню</label>
+						<input type="radio" name="tab-btn" id="tab-btn-2" value="">
+						<label for="tab-btn-2">Лабы</label>
+
+						<div id="content-1">
+							<div class="gn-scroller">
+								<ul class="gn-menu">
+									<li><a href="#header"><span>1</span>Рисование текста</a>
+									<li><a href="#M2"><span>2</span>Стилизация текста</a>
+									<li><a href="#M3"><span>3</span>Тени</a>
+									<li><a href="#M4"><span>4</span>Использование изображений</a>
+									<li><a href="#M5"><span>5</span>Рисование изображений</a>
+									<li><a href="#M6"><span>6</span>Изменение размеров</a>
+									<li><a href="#M7"><span>7</span>Нарезка</a>
+									<li><a href="#practic"><span>-</span>Практика</a>
+									
+								</ul>
+							</div>
+						</div>
+
+						<div id="content-2">
+							<div class="gn-scroller">
+								<ul class="gn-menu">
+									<li><a href="lab_1.html"><span>1</span>Основы canvas</a></li>
+									<li><a href="lab_2.html"><span>2</span>Создание различных фигур</a></li>
+									<li><a href="lab_3.html"><span>3</span>Стили и цвета</a></li>
+									<li><a href="lab_4.html"><span>4</span>Изображения и текст</a></li>
+									<li><a href="lab_5.html"><span>5</span>Трансформации</a></li>
+									<li><a href="lab_6.html"><span>6</span>Анимации</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /gn-scroller -->
+				</nav>
+			</li>
+
+			<div class="container-fluid">
+				<div class="row justify-content-end">
+					<div class="col-12 col-sm-auto ml-sm-auto"><img class="logo" src="../sources/images/logo.png"></div>
+					<div class="col-1 col-sm-auto ml-sm-auto d-none d-sm-block"><a href="#header" class="up"><i class="fa fa-chevron-circle-up" aria-hidden="true"></i> Вверх</a></div>
+				</div>
+			</div>
+		</ul>
+
+		<header id="header">
+			<h1>Лабораторная работа 4<span>Изучение модифицирования текста на полотне, работа с изображениями</span></h1>
+		</header>
+	</div><!-- /box -->
+
+	<div class="container">
+		<div class="row">
+			<div class="content col-12">
+
+				<div><h2 class="section" id="M1">1. Рисование текста</h2></div>
+
+				<p>На холсте можно в совершенстве нарисовать любую желаемую графику, от набора линий или простых геометрических фигур до портрета со всеми мельчайшими подробностями. Но с повышением уровня сложности графики повышается уровень сложности кода. В высшей степени маловероятно, что можно было бы написать самостоятельно весь код, требуемый для создания высококачественного изображения. К счастью, у разработчиков есть другие варианты, кроме как писать весь код самостоятельно. Возможности контекста рисования не ограничиваются рисованием простых прямых и кривых линий, также существуют методы для вставки готовых изображений, текста, узоров и даже рамок для показа видео.</p>
+
+				<div class="center"><iframe src="../sources/examples/frames/l4_main_canvas.html" class="iframemain"></iframe></div>
+				<p class="cuptionexample">Пример стилизированной анимации изображения сделанной с помощью canvas.</p>
+				
+				<p>Контекст рендеринга canvas предоставляет два метода для рисования текста:</p>
+				<ul>
+					<li><code>fillText(text, x, y [, maxWidth])</code> - Вставляет заданный текст в положении <code>(x,y)</code>. Опционально может быть указана максимальная ширина.</li>
+					<li><code>strokeText(text, x, y [, maxWidth])</code> - Вставляет контур заданного текста в положении <code>(x,y</code>). Опционально может быть указана максимальная ширина.</li>
+				</ul>
+				<p class="subsection">Пример fillText</p>
+				<p>Текст вставлен с использованием текущего <code>fillStyle</code>.</p>
+				<p class="code">
+					function draw() { <br>
+					var ctx = document.getElementById('canvas').getContext('2d'); <br>
+					ctx.font = "48px serif"; <br>
+					ctx.fillText("Hello world", 10, 50); <br>
+					}
+				</p>
+				<img style="padding-bottom: 0px" src="../sources/examples/pic/fillText.png" alt="" class="center">
+				<p class="subsection">Пример strokeText</p>
+				<p class="code">
+					function draw() { <br>
+					var ctx = document.getElementById('canvas').getContext('2d'); <br>
+					ctx.font = "48px serif"; <br>
+					ctx.strokeText("Hello world", 10, 50); <br>
+					}
+				</p>
+				<img style="padding-bottom: 0px" src="../sources/examples/pic/strokeText.png" alt="" class="center">
+				
+				<div><h2 class="section" id="M2">2. Стилизация текста</h2></div>
+
+				<p>В примерах выше уже использовали свойство <code>font</code> для изменения размера текста. Кроме него существуют еще несколько свойств, позволяющие настроить вывод текста на <code>canvas</code>:</p>
+				<ul>
+					<li><code>font = value</code> - Это основной стиль, который будет использоваться для вывода текста. Строка имеет такой же синтаксис, как CSS-свойство <code>font</code>. По умолчанию - <code>sans-serif</code> высотой 10px.</li>
+					<li><code>textAlign = value</code> - Настройка выравнивания текста. Возможные значения: <code>start</code>, <code>end</code>, <code>left</code>, <code>right</code> или <code>center</code>. По умолчанию - <code>start</code>.</li>
+					<li><code>textBaseline = value</code> - Настройка выравнивания текста по вертикали. Возможные значения: <code>top</code>, <code>hanging</code>, <code>middle</code>, <code>alphabetic</code>, <code>ideographic</code>, <code>bottom</code>. По умолчанию - <code>alphabetic</code>.</li>
+					<li><code>direction = value</code> - Направление текста. Возможные значения: <code>ltr</code>, <code>rtl</code>, <code>inherit</code>. По умолчанию - <code>inherit</code>.</li>
+				</ul>
+				<p class="subsection">Пример <code>textBaseline</code></p>
+				<p class="code">
+					ctx.font = "48px serif"; <br>
+					ctx.textBaseline = "hanging"; <br>
+					ctx.strokeText("Hello world!", 0, 100);
+				</p><br>
+				<iframe src="../sources/examples/frames/l4_frame_ex.html" class="exframe framerealtime"></iframe>
+				<p>Для измерения ширины текста (без рисования его на <code>canvas</code>) можно воспользоваться следующим методом:</p>
+				<p><code>measureText()</code> - Возвращает объект <code>TextMetrics</code>, содержащий ширину текста в пикселах, до отрисовки на <code>canvas</code>.</p>
+				<p>Пример ниже показывает, как можно измерить ширину текста.</p>
+				<p class="code">
+					var ctx = document.getElementById('canvas').getContext('2d'); <br>
+					var text = ctx.measureText("foo"); // TextMetrics object <br>
+					text.width; // 16;
+				</p>
+
+				<div><h2 class="section" id="M3">3. Тени</h2></div>
+
+				<p>Использование теней включает в себя только четыре свойства:</p>
+				<ul>
+					<li><code>shadowOffsetX = float</code> - Определяет горизонтальное расстояние, на которое тень должна простираться от объекта. На это значение матрица преобразования не влияет. По умолчанию оно равно 0. </li>
+					<li><code>shadowOffsetY = float</code> - Определяет вертикальное расстояние, на которое тень должна простираться от объекта. На это значение матрица преобразования не влияет. По умолчанию оно равно 0. </li>
+					<li><code>shadowBlur = float</code> - Определяет размер эффекта размытия; это значение не соответствует количеству пикселей и не зависит от текущей матрицы преобразования. Значение по умолчанию равно 0. </li>
+					<li><code>shadowColor = color</code> - Стандартное значение цвета CSS, указывающее на цвет эффекта тени; по умолчанию - полностью прозрачный черный. </li>
+				</ul>
+				<p>Свойства <code>shadowOffsetX</code> и <code>shadowOffsetY</code> определяют как далеко тень должна простираться от объекта в направлениях <code>X</code> и <code>Y</code>; на эти значения не влияет текущая матрица преобразования. Используйте отрицательные значения, чтобы заставить тень сместиться вверх или влево, а положительные значения, чтобы заставить тень сместиться вниз или вправо. По умолчанию оба значения равны 0.</p>
+				<p>Свойство <code>shadowBlur</code> определяет размер эффекта размытия; это значение не соответствует количеству пикселей и не зависит от текущей матрицы преобразования. Значение по умолчанию равно 0.</p>
+				<p>Свойство <code>shadowColor</code> - это стандартное значение цвета CSS, определяющее цвет эффекта тени; по умолчанию - полностью прозрачный черный.</p>
+				<p>Пример текста с тенью:</p>
+				<p class="code">
+					var ctx = document.getElementById('canvas').getContext('2d'); <br>
+					 <br>
+					ctx.shadowOffsetX = 2; <br>
+					ctx.shadowOffsetY = 2; <br>
+					ctx.shadowBlur = 2; <br>
+					ctx.shadowColor = "rgba(0, 0, 0, 0.5)"; <br>
+					 <br>
+					ctx.font = "20px Times New Roman"; <br>
+					ctx.fillStyle = "Black"; <br>
+					ctx.fillText("Sample String", 5, 30);
+				</p>
+				<img src="../sources/examples/pic/shadow.png" alt="" class="center">
+				<p class="subsection">Правила заполнения холста</p>
+				<p>При использовании <code>fill</code> (или <code>clip</code> и <code>isPointinPath</code>) можно дополнительно предусмотреть алгоритм правила заливки, по которому будет определяться, находится ли точка внутри или снаружи пути и, таким образом, будет ли она заполнена или нет. Это полезно в тех случаях, когда путь пересекается или вложен.</p>
+				<p>Возможны два значения:</p>
+				<ul>
+					<li>"<code>nonzero</code>" - Правило ненулевого индекса, которое является правилом по умолчанию.</li>
+					<li>"<code>evenodd</code>" - Правило четный-нечетный.</li>
+				</ul>
+				<p>В этом примере используем правило четный-нечетный.</p>
+				<p class="code">
+					ctx.beginPath(); <br>
+					ctx.arc(50, 50, 30, 0, Math.PI*2, true); <br>
+					ctx.arc(50, 50, 15, 0, Math.PI*2, true); <br>
+					ctx.fill("evenodd");
+				</p> 
+				<img src="../sources/examples/pic/eve.png" alt="" class="center">
+
+				<div><h2 class="section" id="M4">4. Использование изображений</h2></div>
+
+				<p>До сих пор создавали наши собственные фигуры и применяли стили к ним. Одна из самых впечатляющих функций <code>&lt;canvas&gt;</code> это возможность использования изображений. Они могут быть использованы для динамического композитинга фото или как фоны графиков, для спрайтов в играх, и так далее. Внешние изображения могут быть использованы в любых поддерживаемых браузером форматах, таких как PNG, GIF, или JPEG. Вы можете даже использовать изображение, произведенное другими <code>canvas</code> элементами на той же странице как источник!</p>
+				<p>Импортирование изображений в <code>canvas</code> в основном состоит из 2 этапов:</p>
+				<ul>
+					<li>Дав ссылку на <code>HTMLImageElement</code> объект или для другого <code>canvas</code> элемента как источник. Также можно использовать изображение дав ссылку на URL.</li>
+					<li>Для рисования изображения на <code>canvas</code> используется функция <code>drawImage()</code>.</li>
+				</ul>
+				<p>Canvas API может использовать все перечисленные далее типы данных как источник изображения:</p>
+				<ul>
+					<li><code>HTMLImageElement</code> - Эти изображения созданы, используя конструктор <code>Image()</code>, также как все <code>&lt;img&gt;</code> элементы.</li>
+					<li><code>HTMLVideoElement</code> - Используя HTML <code>&lt;video&gt;</code> элемент как источник изображения захватывает текущий кадр из видео и использует его как изображение.</li>
+					<li><code>HTMLCanvasElement</code> - Вы можете использовать другой <code>&lt;canvas&gt;</code> элемент как источник изображения.</li>
+				</ul>
+				<p>Эти источники совместно именуемые по типу <code>CanvasImageSource</code>.</p>
+				<p>Есть несколько способов, чтобы получить изображения для использования на холсте.</p>
+				<p class="subsection">Использование изображений из той же страницы</p>
+				<p>Можно получить ссылку на изображение, на той же странице, на <code>canvas</code> с используя  один из способов: </p>
+				<ul>
+					<li><code>document.images</code> коллекция</li>
+					<li><code>The document.getElementsByTagName()</code> метод</li>
+					<li>Если вы знаете <code>id</code> конкретного изображения, который вы хотите использовать, вы можете использовать <code>document.getElementById ()</code>, чтобы получить это конкретное изображение</li>
+				</ul>
+				<p class="subsection">Использование изображений из других доменов</p>
+				<p>Использование <code>crossorigin</code> атрибута <code>&lt;img&gt;</code> элемент (отображается  <code>HTMLImageElement.crossOrigin</code> свойства), вы можете запросить разрешение на загрузку другого домена для использования в <code>drawImage()</code>. Если хостинг домен разрешает доступ к междоменному изображению, то изображение может быть использовано в вашем <code>canvas</code> без <code>without tainting it;</code>иначе он может испортить ваш <code>canvas</code>.</p>
+				<p class="subsection">Использование других <code>canvas</code> элементов</p>
+				<p>Как и с обычными изображениями, можем получить доступ к другим <code>canvas</code> элементам используя либо <code>document.getElementsByTagName()</code> либо <code>document.getElementById()</code> метод. Проверьте, что в <code>canvas</code> источнике уже что-то нарисовано, прежде чем использовать его в целевом изображении <code>canvas</code>.</p>
+				<p>Одним из удобных способов было бы использование второго элемента <code>canvas</code>  в качестве миниатюры другого большего изображения <code>canvas</code>.</p>
+				<p class="subsection">Создание изображений с нуля</p>
+				<p>Другой способ это создать новые <code>HTMLImageElement</code> объекты в нашем скрипте.  Чтобы это сделать, вы можете использовать удобный <code>Image()</code> конструктор:</p>
+				<p class="code">
+					var img = new Image();   // Создает новый элемент изображения <br>
+					img.src = 'myImage.png'; // Устанавливает путь
+				</p>
+				<p>Когда этот скрипт выполнится, изображение начнет загружаться.</p>
+				<p>Если вы попытаетесь вызвать функцию <code>drawImage()</code> перед тем как изображение загрузится, то скрипт ничего не сделает (или, в старых браузерах, может даже выдать исключение). Поэтому вам необходимо использовать событие <code>load</code>, чтобы вы не пытались сделать это прежде, чем изображение загрузится:</p>
+				<p class="code">
+					var img = new Image();   // Создает новое изображение <br>
+					img.addEventListener("load", function() { <br>
+					// здесь выполняет drawImage функцию <br>
+					}, false); <br>
+					img.src = 'myImage.png'; // Устанавливает источник файла
+				</p>
+				<p class="subsection">Вложение изображения с помощью данных: <code>URL</code></p>
+				<p>Другой возможный способ включить изображение это через <code>data: url</code>. <code>Data URLs</code> позволяет вам полностью определить изображение как <code>Base64</code> кодированную строку символов прямо в ваш код.</p>
+				<p class="code">
+					var img = new Image();   // Создает новый элемент img <br>
+					img.src = 'data:image/gif;base64,R0lGODlhCwALAIAAAAAA3pn/ZiH5BAEAAAEALAAAAAALAAsAAAIUhA+hkcuO4lmNVindo7qyrIXiGBYAOw==';
+				</p>
+				<p>Одним из преимуществ <code>data URLs</code> это то что полученное изображение доступно сразу без других запросов туда-обратно на сервер. Другое потенциальное преимущество в том, что также можно инкапсулировать всё в одном файле все ваши CSS, JavaScript, HTML, и изображения, что делает его более портативным в других местах.</p>
+				<p>Некоторые недостатки этого метода в том что ваше изображение не кешировано, и для изображений с большим размером кодированние url может стать очень долгим процессом.</p>
+				<p class="subsection">Использование кадров из видео</p>
+				<p>Вы также можете использовать кадры из видео представленных <code>&lt;video&gt;</code> элементом (даже если видео не видно). Например, если у вас есть <code>&lt;video&gt;</code> элемент с  <code>ID "myvideo"</code>, вы можете сделать:</p>
+				<p class="code">
+					function getMyVideo() { <br>
+					var canvas = document.getElementById('canvas'); <br>
+					if (canvas.getContext) { <br>
+					var ctx = canvas.getContext('2d'); <br>
+					<br>
+					return document.getElementById('myvideo'); <br>
+					} <br>
+					}
+				</p>
+				<p>Эта функция вернет <code>HTMLVideoElement</code> объект для этого видео, который, является одним из объектов, который можно использовать как <code>CanvasImageSource</code>.</p>
+
+				<div><h2 class="section" id="M5">5. Рисование изображений</h2></div>
+
+				<p>Как только получили ссылку на источник объекта изображения, можем использовать метод <code>drawImage()</code> для включения его в  <code>canvas</code>. Как увидим далее, метод <code>drawImage()</code> перегружен и у него есть несколько вариантов. В базовом варианте он выглядит как:</p>
+				<p><code>drawImage(image, x, y)</code> - Рисует  изображение, указанное в <code>CanvasImageSource</code> в координатах <code>(x, y)</code>.</p>
+				<p class="subsection">Простой линейный график</p>
+				<p>В следующем примере будем использовать внешнее изображение в качестве фона для небольшого линейного графика. Использование фонов может сделать ваш скрипт значительно меньше, потому что можем избежать необходимости писать код для создания фона. В этом примере используем только один образ, поэтому я использую обработчик событий изображения объекта загрузки для выполнения операторов рисования. <code>drawImage()</code> метод определяющий место фона с координатами <code>(0, 0)</code>, которые привязаны к верхнему левому углу <code>canvas</code>.</p>
+				<p class="code">
+					function draw() { <br>
+					var ctx = document.getElementById('canvas').getContext('2d'); <br>
+					var img = new Image(); <br>
+					img.onload = function(){ <br>
+					ctx.drawImage(img,0,0); <br>
+					ctx.beginPath(); <br>
+					ctx.moveTo(30,96); <br>
+					ctx.lineTo(70,66); <br>
+					ctx.lineTo(103,76); <br>
+					ctx.lineTo(170,15); <br>
+					ctx.stroke(); <br>
+					}; <br>
+					img.src = 'https://mdn.mozillademos.org/files/5395/backdrop.png'; <br>
+					}
+				</p>
+				<p>Получившийся график выглядит так:</p>
+				<img src="../sources/examples/pic/graph.png" alt="" class="center">
+
+				<div><h2 class="section" id="M6">6. Изменение размеров</h2></div>
+
+				<p>Второй вариант метода <code>drawImage()</code> добавляет два новых параметра и позволяет разместить изображение в  <code>canvas</code> с измененными размерами.</p>
+				<p><code>drawImage(image, x, y, width, height)</code> - Это добавляет параметр ширины и высоты, которые указывают до какого размера нужно изменить изображение при рисовании его в  <code>canvas</code>.</p>
+				<p class="subsection">Тайлинг изображения</p>
+				<p>В этом примере будем использовать изображение в качестве обоев и повторим его в <code>canvas</code> несколько раз. Это может быть сделано просто через цикл, располагая измененные изображения на разных позициях. В коде внизу, первый цикл <code>for</code> проходит по рядам. Второй цикл <code>for</code> проходит по колонкам. Изображение уменьшено на треть от реального размера, которое было  50x38 пикселей.</p>
+				<p class="note">Изображения могут стать размытыми, при большом увеличении или зернистыми при значительном уменьшении. Возможно, лучше всего не изменять размеры изображения, если на них есть текст, который должен остаться читаемым. </p>
+				<p class="code">
+					function draw() { <br>
+					var ctx = document.getElementById('canvas').getContext('2d'); <br>
+					var img = new Image(); <br>
+					img.onload = function(){ <br>
+					for (var i=0;i<4;i++){ <br>
+					for (var j=0;j<3;j++){ <br>
+					ctx.drawImage(img,j*50,i*38,50,38); <br>
+					} <br>
+					} <br>
+					}; <br>
+					img.src = 'A.png'; <br>
+					}
+				</p>
+				<p>Получившийся рисунок <code>canvas</code> выглядит так:</p>
+				<img src="../sources/examples/pic/backimg.png" alt="" class="center">
+
+				<div><h2 class="section" id="M7">7. Нарезка</h2></div>
+
+				<p>У третьего и последнего варианта метода <code>drawImage()</code> в дополнении к источнику изображения есть еще восемь параметров . Он позволяет нам вырезать кусок из изображения, затем изменить его размер и нарисовать его в <code>canvas</code>.</p>
+				<p><code>drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)</code> - В данном изображении, эта функция берет фрагмент из изображения, в виде прямоугольника, левый верхний угол которого - <code>(sx, sy)</code>, ширина и высота - <code>sWidth</code> и <code>sHeight</code> и рисует в <code>canva</code>s, располагая его в точке <code>(dx, dy)</code> и изменяя его размер на указанные величины в <code>dWidth</code> и <code>dHeight</code>.</p>
+				<p>Чтобы понять что  делает нарезка, можно посмотреть на изображение внизу. Первые четыре параметра определяют местоположение и размер фрагмента исходного изображения. Последние четыре параметра определяют прямоугольник, в который будет вписано изображение на целевом рисунке  <code>canvas</code>.</p>
+				<div class="center">
+					<img src="../sources/examples/pic/Canvas_drawimage.jpg" alt="" class="center">
+				</div>
+				<p>Нарезка может быть полезным инструментом, когда вы захотите сделать композицию. Вы могли бы собрать все элементы в одном файле изображения и использовать этот метод для создания композиции. Например, если вы захотите сделать график, вы могли бы сделать PNG изображение, содержащее все необходимые тексты в одном файле и в зависимости от ваших данных, могли бы достаточно просто изменять график. Другим преимуществом является то, что нет необходимости загружать каждое изображение по отдельности, получив возможность увеличить скорость загрузки.</p>
+				<p class="subsection">Обрамление изображения</p>
+				<p>В этом примере будем рамку. Изображение рамки это 24-х битный PNG, который включает падающую тень. Так как в 24-х битные PNG изображения включается полный 8-ми битный альфа-канал, в отличие от GIF и 8-битных PNG изображений, он может быть помещен в любой фон, без беспокойства о матовом цвете. </p>
+				<p class="code">
+					function draw() {
+					var canvas = document.getElementById('canvas'); <br>
+					var ctx = canvas.getContext('2d'); <br>
+					<br>
+					// Рисуем фрагмент <br>
+					ctx.drawImage(document.getElementById('source'), <br>
+					33, 71, 104, 124, 21, 20, 87, 104); <br>
+					<br>
+					// Рисуем рамку <br>
+					ctx.drawImage(document.getElementById('frame'),0,0); <br>
+					}
+				</p>
+				<p>В этот раз применили другой способ загрузки изображения. Вместо загрузки методом создания новых <code>HTMLImageElement</code> объектов, включили их как <code>&lt;img&gt;</code> тэги прямо в наш HTML файл и из них выбрали изображения. Изображения скрыты с помощью  CSS свойства <code>display</code>, установленного в "<code>none</code>" для этих изображений.</p>
+				<img src="../sources/examples/pic/borderimg.png" alt="" class="center">
+				<p>Каждому <code>&lt;img&gt;</code> присвоен атрибут <code>ID</code>, который  делает удобным их выбор с использованием <code>document.getElementById()</code>. Потом просто используем функцию <code>drawImage()</code>, чтобы из первого изображения вырезать фрагмент носорога и вставить его в <code>canvas</code>, затем рисуем рамку сверху, используя второй вызов функции <code>drawImage()</code>.</p>
+				<p class="subsection">Контроль изменений размеров изображения</p>
+				<p>Как было отмечено ранее, изменение размеров изображений может привести к размытости или к шуму в процессе преобразования. Вы можете использовать контекст рисования <code>imageSmoothingEnabled</code> свойства, чтобы контролировать использование сглаживающего алгоритма, когда изменяющиеся изображения в вашем контексте. Обычно это свойство установлено в <code>true</code>, означая, что изображения будут сглажены во время изменения размеров. Вы можете отключить это свойство так:</p>
+				<p class="code">
+					ctx.mozImageSmoothingEnabled = false; <br>
+					ctx.webkitImageSmoothingEnabled = false; <br>
+					ctx.msImageSmoothingEnabled = false; <br>
+					ctx.imageSmoothingEnabled = false;
+				</p>
+
+				<h2 id="practic" class="practic">Практика</h2>
+
+				<p class="practictext">Цель работы: Изучение модифицирования текста на полотне, работа с изображениями.</p>
+				<h2 class="section">Задание к лабораторной работе №4:</h2>
+				<p class="subsection">Задание №1:</p>
+				<p>Создайте галерею изображений, с помощью <code>canvas</code> сделайте:</p>
+				<ul class="practictodo">
+					<li>Возьмите изображение, обрежьте его, сделайте заготовку, чтоб использовать его как элемент рамки;</li>
+					<li>Рамку каждому изображению по его размеру;</li>
+					<li>Подпись к изображению под рамкой, стилизуйте ее;</li>
+					<li>Добавить подписи тень.</li>
+				</ul>
+				<p class="subsection">Задание №2:</p>
+				<p>Придумайте статистику для вашей галереи (например, посещаемости), по этой статистике с помощью <code>canvas</code> сделайте:</p>
+				<ul class="practictodo">
+					<li>График;</li>
+					<li>Круговую диаграмму.</li>
+				</ul>
+				<p class="subsection">Задание №3:</p>
+				<ul class="practictodo">
+					<li>Создайте полотно <code>canvas</code>, цвет которого будет изменяться в зависимости от местоположения курсора в пределах элемента.</li>
+				</ul>
+
+				<h2 class="section">Отчет по лабораторной работе должен содержать:</h2>
+
+				<ul class="practictodo">
+					<li>Скриншоты и описание выполнения лабораторной работы попунктно;</li>
+					<li>Полный скриншот получившейся веб-страницы;</li>
+					<li>HTML, CSS и JavaScript код с необходимыми объяснениями.</li>
+				</ul>
+				<p class="gotop"><a href="#header">Вернуться в начало</a></p>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer">
+		<div class="container">
+			<div class="row justify-content-between">
+				<div class="col-12 col-sm-auto">
+					Dnipro National University |  Laboratory Workshop &copy; 2020
+				</div>
+				<div class="col-12 col-sm-auto">
+					Designed by Zymeth
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script src="../sources/js/classie.js"></script>
+	<script src="../sources/js/gnmenu.js"></script>
+	<script src="../sources/js/example.js"></script>
+	<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/6859/tween.min_1.js'></script>
+  
+  
+<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r11/Stats.js"></script>
+<script src="../sources/js/canvasstars.js"></script>
+	<script>
+		new gnMenu(document.getElementById('gn-menu'));
+	</script>
+
+
+</body>
+</html>
