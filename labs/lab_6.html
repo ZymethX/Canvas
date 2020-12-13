@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Лабораторная работа 5</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/main.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/tables.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/tabs.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/component.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/example.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Cardo" rel="stylesheet">
+
+	<script src="../sources/js/modernizr.custom.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<style>
+		canvas#canvas {
+			background-color: #1C1E20;
+			border-radius: 20px;
+			margin: 20px auto 0px;
+			max-width: 80%;	
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<ul id="gn-menu" class="gn-menu-main">
+			<li class="gn-trigger">
+				<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+				<nav class="gn-menu-wrapper">
+					<div class="tabs">
+						<input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
+						<label for="tab-btn-1">Меню</label>
+						<input type="radio" name="tab-btn" id="tab-btn-2" value="">
+						<label for="tab-btn-2">Лабы</label>
+
+						<div id="content-1">
+							<div class="gn-scroller">
+								<ul class="gn-menu">
+									<li><a href="#header"><span>1</span>Сохранение состояния</a>
+									<li><a href="#M2"><span>2</span>Трансляция</a>
+									<li><a href="#M3"><span>3</span>Поворот</a>
+									<li><a href="#M4"><span>4</span>Масштабирование</a>
+									<li><a href="#M5"><span>5</span>Матричное преобразование</a>
+									<li><a href="#M6"><span>6</span>Композиция и обрезка</a>
+									<li><a href="#practic"><span>-</span>Практика</a>
+									
+								</ul>
+							</div>
+						</div>
+
+						<div id="content-2">
+							<div class="gn-scroller">
+								<ul class="gn-menu">
+									<li><a href="lab_1.html"><span>1</span>Основы canvas</a></li>
+									<li><a href="lab_2.html"><span>2</span>Создание различных фигур</a></li>
+									<li><a href="lab_3.html"><span>3</span>Стили и цвета</a></li>
+									<li><a href="lab_4.html"><span>4</span>Изображения и текст</a></li>
+									<li><a href="lab_5.html"><span>5</span>Трансформации</a></li>
+									<li><a href="lab_6.html"><span>6</span>Анимации</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /gn-scroller -->
+				</nav>
+			</li>
+
+			<div class="container-fluid">
+				<div class="row justify-content-end">
+					<div class="col-12 col-sm-auto ml-sm-auto"><img class="logo" src="../sources/images/logo.png"></div>
+					<div class="col-1 col-sm-auto ml-sm-auto d-none d-sm-block"><a href="#header" class="up"><i class="fa fa-chevron-circle-up" aria-hidden="true"></i> Вверх</a></div>
+				</div>
+			</div>
+		</ul>
+
+		<header id="header">
+			<h1>Лабораторная работа 6<span>Изучение анимаций, создание и анимирование элементов</span></h1>
+		</header>
+	</div><!-- /box -->
+
+	<div class="container">
+		<div class="row">
+			<div class="content col-12">
+
+				<div><h2 class="section" id="M1">1. Простые анимации</h2></div>
+
+				<p>Поскольку для управления элементами <code>&lt;canvas&gt;</code> используется JavaScript, есть возможность сделать анимации.</p>
+				<p>Вероятно, самым большим ограничением является то, что когда фигура нарисована, её уже нельзя двигать. Чтобы изобразить движение нужно перерисовать фигуру и всё, что было нарисовано до неё. Перерисовка сложных кадров занимает много времени, и производительность сильно зависит от скорости компьютера, на котором она выполняется.</p>
+
+				<div class="center"><iframe src="../sources/examples/frames/l6_main_canvas.html" class="iframemain"></iframe></div>
+				<p class="cuptionexample">Пример создания анимации рисования абстракционных фигур на полотне <code>canvas</code></p>
+
+				<p>Ниже перечислены необходимые шаги для того, чтобы нарисовать кадр:</p>
+				<ul>
+					<li>Очистить <code>canvas</code> - Если фигура, которую вы собираетесь нарисовать, не занимает всю площадь <code>canvas</code> (как фон, например), то всё что было нарисовано ранее необходимо стереть. Проще всего это сделать при помощи метода <code>clearRect()</code>.</li>
+					<li>Сохранить изначальное состояние <code>canvas</code> - Если вы изменяете любые настройки (такие как стили, трансформации и т.п.), которые затрагивают состояние <code>canvas</code> и вы хотите убедиться, что оригинальное состояние используется каждый раз, когда был отрисован кадр, то вам следует сохранить это оригинальное состояние.</li>
+					<li>Нарисовать анимированные фигуры - Шаг на котором вы собственно отрисовываете кадр.</li>
+					<li>Восстановить состояние <code>canvas</code> - Если вы сохраняли состояние, восстановите его, прежде чем отрисовывать новый кадр.</li>
+				</ul>	
+				<p>Фигуры отрисовываются на <code>canvas</code> либо напрямую — при помощи методов <code>canvas</code>, либо с помощью сторонних функций. В нормальной ситуации результат станет виден на <code>canvas</code> после окончания выполнения скрипта. К примеру, цикл for использовать для анимации нельзя. </p>
+				<p>Это значит, нужен способ выполнения функций отрисовки через интервалы времени. Есть два способа для управления такой анимацией.</p>
+				<p class="subsection">Запланированные обновления</p>
+				<p>Первый — это функции <code>window.setInterval()</code>, <code>window.setTimeout()</code>, и <code>window.requestAnimationFrame()</code>, которые могут быть использованы для вызова некоторой функции, через заданный промежуток времени.</p>
+				<ul>
+					<li><code>setInterval(function, delay)</code> - Начинает периодически исполнять функцию <code>function</code> каждые <code>delay</code> миллисекунд.</li>
+					<li><code>setTimeout(function, delay)</code> - Запускает выполнение указанной функции <code>function</code> через <code>delay</code> миллисекунд.</li>
+					<li><code>setTimeout(function, delay)</code> - Запускает выполнение указанной функции <code>function</code> через <code>delay</code> миллисекунд.</li>
+				</ul>
+				<p>Если вы не планируете никакого взаимодействия с пользователем, вы можете использовать функцию <code>setInterval()</code> , которая многократно выполняет, предоставленный ей код. Если же вы планиуете создать игру, в которой контроль анимации осуществляется мышью или клавиатурой, то необходимо использовать  <code>setTimeout()</code>. Установив <code>EventListener</code>, вы можете перехватываете любые действия пользователя и запустить соответствующие функции анимации.</p>
+				<p class="note">В примерах ниже мы будем использовать функцию <code>window.requestAnimationFrame()</code> для контроля анимации. Функция <code>requestAnimationFrame</code> является более эффективной для создания анимации, так как новая итерация вызывается, когда система готова к отрисовке нового кадра. Количество вызовов в секунду примерно равно 60 и уменьшается, когда вкладка неактивна. </p>
+				
+				<div><h2 class="section" id="M2">2. Простые примеры:</h2></div>
+				
+				<p class="subsection">Анимированная солнечная система</p>
+				<p>В этом примере анимируется небольшая модель солнечной системы.</p>
+				<p class="code">
+					var sun = new Image(); <br>
+					var moon = new Image(); <br>
+					var earth = new Image(); <br>
+					function init(){ <br>
+					sun.src = 'https://mdn.mozillademos.org/files/1456/Canvas_sun.png'; <br>
+					moon.src = 'https://mdn.mozillademos.org/files/1443/Canvas_moon.png'; <br>
+					earth.src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png'; <br>
+					window.requestAnimationFrame(draw); <br>
+					} <br>
+					<br>
+					function draw() { <br>
+					var ctx = document.getElementById('canvas').getContext('2d'); <br>
+					<br>
+					ctx.globalCompositeOperation = 'destination-over'; <br>
+					ctx.clearRect(0,0,300,300); // clear canvas <br>
+					<br>
+					ctx.fillStyle = 'rgba(0,0,0,0.4)'; <br>
+					ctx.strokeStyle = 'rgba(0,153,255,0.4)'; <br>
+					ctx.save(); <br>
+					ctx.translate(150,150); <br>
+					<br>
+					// Earth <br>
+					var time = new Date(); <br>
+					ctx.rotate( ((2*Math.PI)/60)*time.getSeconds() + ((2*Math.PI)/60000)*time.getMilliseconds() ); <br>
+					ctx.translate(105,0); <br>
+					ctx.fillRect(0,-12,50,24); // Shadow <br>
+					ctx.drawImage(earth,-12,-12); <br>
+					<br>
+					// Moon <br>
+					ctx.save(); <br>
+					ctx.rotate( ((2*Math.PI)/6)*time.getSeconds() + ((2*Math.PI)/6000)*time.getMilliseconds() ); <br>
+					ctx.translate(0,28.5); <br>
+					ctx.drawImage(moon,-3.5,-3.5); <br>
+					ctx.restore(); <br>
+					<br>
+					ctx.restore(); <br>
+					<br>
+					ctx.beginPath(); <br>
+					ctx.arc(150,150,105,0,Math.PI*2,false); // Earth orbit <br>
+					ctx.stroke(); <br>
+					<br>
+					ctx.drawImage(sun,0,0,300,300); <br>
+					<br>
+					window.requestAnimationFrame(draw); <br>
+					} <br>
+					<br>
+					init();
+				</p><br>
+				<iframe src="../sources/examples/frames/l6_frame_ex1.html" class="lab6frex1"></iframe>
+
+				<p class="subsection">Анимированные часы</p>
+				<p>В этом примере создаются анимированные часы, показывающие правильное время.</p>
+				<p class="code">
+					function clock(){ b<br>
+					var now = new Date(); b<br>
+					var ctx = document.getElementById('canvas').getContext('2d'); b<br>
+					ctx.save(); b<br>
+					ctx.clearRect(0,0,150,150); b<br>
+					ctx.translate(75,75); b<br>
+					ctx.scale(0.4,0.4); b<br>
+					ctx.rotate(-Math.PI/2); b<br>
+					ctx.strokeStyle = "black"; <br>
+					ctx.fillStyle = "white"; <br>
+					ctx.lineWidth = 8; <br>
+					ctx.lineCap = "round"; <br>
+					<br>
+					// Hour marks b<br>
+					ctx.save(); b<br>
+					for (var i=0;i<12;i++){ b<br>
+					ctx.beginPath(); <br>
+					ctx.rotate(Math.PI/6); <br>
+					ctx.moveTo(100,0); <br>
+					ctx.lineTo(120,0); <br>
+					ctx.stroke(); b<br>
+					} b<br>
+					ctx.restore(); <br>
+					<br>
+					// Minute marks b<br>
+					ctx.save(); b<br>
+					ctx.lineWidth = 5; <br>
+					for (i=0;i<60;i++){ b<br>
+					if (i%5!=0) { b<br>
+					ctx.beginPath(); <br>
+					ctx.moveTo(117,0); <br>
+					ctx.lineTo(120,0); <br>
+					ctx.stroke(); b<br>
+					} b<br>
+					ctx.rotate(Math.PI/30); b<br>
+					} b<br>
+					ctx.restore(); <br>
+					<br>
+					var sec = now.getSeconds(); b<br>
+					var min = now.getMinutes(); b<br>
+					var hr  = now.getHours(); b<br>
+					hr = hr>=12 ? hr-12 : hr; b<br>
+					<br>
+					ctx.fillStyle = "black"; <br>
+					<br>
+					// write Hours <br>
+					ctx.save(); b<br>
+					ctx.rotate( hr*(Math.PI/6) + (Math.PI/360)*min + (Math.PI/21600)*sec ) <br>
+					ctx.lineWidth = 14; b<br>
+					ctx.beginPath(); <br>
+					ctx.moveTo(-20,0); <br>
+					ctx.lineTo(80,0); b<br>
+					ctx.stroke(); b<br>
+					ctx.restore(); <br>
+					<br>
+					// write Minutes <br>
+					ctx.save(); b<br>
+					ctx.rotate( (Math.PI/30)*min + (Math.PI/1800)*sec ) b<br>
+					ctx.lineWidth = 10; b<br>
+					ctx.beginPath(); <br>
+					ctx.moveTo(-28,0); <br>
+					ctx.lineTo(112,0); <br>
+					ctx.stroke(); b<br>
+					ctx.restore(); <br>
+					<br>
+					// Write seconds <br>
+					ctx.save(); b<br>
+					ctx.rotate(sec * Math.PI/30); b<br>
+					ctx.strokeStyle = "#D40000"; <br>
+					ctx.fillStyle = "#D40000"; <br>
+					ctx.lineWidth = 6; <br>
+					ctx.beginPath(); <br>
+					ctx.moveTo(-30,0); <br>
+					ctx.lineTo(83,0); b<br>
+					ctx.stroke(); b<br>
+					ctx.beginPath(); <br>
+					ctx.arc(0,0,10,0,Math.PI*2,true); b<br>
+					ctx.fill(); b<br>
+					ctx.beginPath(); <br>
+					ctx.arc(95,0,10,0,Math.PI*2,true); <br>
+					ctx.stroke(); b<br>
+					ctx.fillStyle = "rgba(0,0,0,0)"; <br>
+					ctx.arc(0,0,3,0,Math.PI*2,true); <br>
+					ctx.fill(); b<br>
+					ctx.restore(); <br>
+					<br>
+					ctx.beginPath(); <br>
+					ctx.lineWidth = 14; b<br>
+					ctx.strokeStyle = '#325FA2'; <br>
+					ctx.arc(0,0,142,0,Math.PI*2,true); <br>
+					ctx.stroke(); b<br>
+					<br>
+					ctx.restore(); <br>
+					<br>
+					window.requestAnimationFrame(clock); <br>
+					} b<br>
+					<br>
+					window.requestAnimationFrame(clock);
+				</p><br>
+				<iframe src="../sources/examples/frames/l6_frame_ex2.html" class="lab6frex2"></iframe>
+
+				<p class="subsection">Зацикленная панорама</p>
+				<p>В этом примере панорама прокручивается слева направо.</p>
+				<p class="code">
+					var img = new Image(); <br>
+					 <br>
+					// User Variables - customize these to change the image being scrolled, its <br>
+					// direction, and the speed. <br>
+					 <br>
+					img.src = 'https://mdn.mozillademos.org/files/4553/Capitan_Meadows,_Yosemite_National_Park.jpg'; <br>
+					var CanvasXSize = 800; <br>
+					var CanvasYSize = 200; <br>
+					var speed = 30; //lower is faster <br>
+					var scale = 1.05; <br>
+					var y = -4.5; //vertical offset <br>
+					 <br>
+					// Main program <br>
+					 <br>
+					var dx = 0.75; <br>
+					var imgW; <br>
+					var imgH; <br>
+					var x = 0; <br>
+					var clearX; <br>
+					var clearY; <br>
+					var ctx; <br>
+					 <br>
+					img.onload = function() { <br>
+					imgW = img.width*scale; <br>
+					imgH = img.height*scale; <br>
+					if (imgW > CanvasXSize) { x = CanvasXSize-imgW; } // image larger than canvas <br>
+					if (imgW > CanvasXSize) { clearX = imgW; } // image larger than canvas <br>
+					else { clearX = CanvasXSize; } <br>
+					if (imgH > CanvasYSize) { clearY = imgH; } // image larger than canvas <br>
+					else { clearY = CanvasYSize; } <br>
+					//Get Canvas Element <br>
+					ctx = document.getElementById('canvas').getContext('2d'); <br>
+					//Set Refresh Rate <br>
+					return setInterval(draw, speed); <br>
+					} <br>
+					 <br>
+					function draw() { <br>
+					//Clear Canvas <br>
+					ctx.clearRect(0,0,clearX,clearY); <br>
+					//If image is <= Canvas Size <br>
+					if (imgW <= CanvasXSize) { <br>
+					//reset, start from beginning <br>
+					if (x > (CanvasXSize)) { x = 0; } <br>
+					//draw aditional image <br>
+					if (x > (CanvasXSize-imgW)) { ctx.drawImage(img,x-CanvasXSize+1,y,imgW,imgH); } <br>
+					} <br>
+					//If image is > Canvas Size <br>
+					else { <br>
+					//reset, start from beginning <br>
+					if (x > (CanvasXSize)) { x = CanvasXSize-imgW; } <br>
+					//draw aditional image <br>
+					if (x > (CanvasXSize-imgW)) { ctx.drawImage(img,x-imgW+1,y,imgW,imgH); } <br>
+					} <br>
+					//draw image <br>
+					ctx.drawImage(img,x,y,imgW,imgH); <br>
+					//amount to move <br>
+					x += dx; <br>
+					}
+				</p><br>
+				<iframe src="../sources/examples/frames/l6_frame_ex3.html" class="lab6frex3"></iframe>
+				<p>Заметьте, что ширина и высота должны совпадать со значениями <code>CanvasXZSize</code> и <code>CanvasYSize</code>.</p>
+				<p class="code">&lt;canvas id="canvas" width="800" height="200"&gt;&lt;/canvas&gt;</p>
+
+				<div><h2 class="section" id="M3">3. Расширенные анимации</h2></div>
+
+				<p>До этого сделали несколько базовых анимаций и узнали, как можно двигать вещи. В этой части более подробно рассмотрим само движение и собираемся добавить некоторую физику, чтобы сделать анимации более продвинутыми.</p>
+				<p>Будем использовать шар для дальнейших анимационных исследований, поэтому давайте сначала нарисуем этот шар на canvas. Нужен следующий код.</p>
+				<p class="code">&lt;canvas id="canvas" width="600" height="300"&gt;&lt;/canvas&gt;</p>
+				<p>Как обычно, нужен контекст рисования. Чтобы нарисовать шар, создадим объект <code>ball</code>, который содержит свойства и метод <code>draw()</code> , чтобы нарисовать его на <code>canvas</code>.</p>
+				<p class="code">
+					var canvas = document.getElementById('canvas'); <br>
+					var ctx = canvas.getContext('2d'); <br>
+ 					<br>
+					var ball = { <br>
+					x: 100, <br>
+					y: 100, <br>
+					radius: 25, <br>
+					color: 'blue', <br>
+					draw: function() { <br>
+					ctx.beginPath(); <br>
+					ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true); <br>
+					ctx.closePath(); <br>
+					ctx.fillStyle = this.color; <br>
+					ctx.fill(); <br>
+					} <br>
+					}; <br>
+ 					<br>
+					ball.draw();
+				</p>
+				<p><code>window.requestAnimationFrame()</code> помогает нам контролировать анимацию. Мяч перемещается, добавляя вектор скорости в положение. Для каждого кадра мы также очищаем холст, чтобы удалить старые круги из предыдущих кадров.</p>
+				<p class="code">
+					var canvas = document.getElementById('canvas'); <br>
+					var ctx = canvas.getContext('2d'); <br>
+					var raf; <br>
+					 <br>
+					var ball = { <br>
+					x: 100, <br>
+					y: 100, <br>
+					vx: 5, <br>
+					vy: 2, <br>
+					radius: 25, <br>
+					color: 'blue', <br>
+					draw: function() { <br>
+					ctx.beginPath(); <br>
+					ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true); <br>
+					ctx.closePath(); <br>
+					ctx.fillStyle = this.color; <br>
+					ctx.fill(); <br>
+					} <br>
+					}; <br>
+					 <br>
+					function draw() { <br>
+					ctx.clearRect(0,0, canvas.width, canvas.height); <br>
+					ball.draw(); <br>
+					ball.x += ball.vx; <br>
+					ball.y += ball.vy; <br>
+					raf = window.requestAnimationFrame(draw); <br>
+					} <br>
+					 <br>
+					canvas.addEventListener('mouseover', function(e) { <br>
+					raf = window.requestAnimationFrame(draw); <br>
+					}); <br>
+					 <br>
+					canvas.addEventListener('mouseout', function(e) { <br>
+					window.cancelAnimationFrame(raf); <br>
+					}); <br>
+					 <br>
+					ball.draw();
+				</p>
+				<p class="subsection">Границы</p>
+				<p>Без какого-либо граничного коллизионного тестирования наш мяч быстро выбегает из холста. Нам нужно проверить, не находятся ли <code>x</code> и <code>y</code> положения шара вне размеров холста и не инвертируют направление векторов скорости. Для этого мы добавим следующие проверки в метод <code>draw</code> :</p>
+				<p class="code">
+					if (ball.y + ball.vy > canvas.height || ball.y + ball.vy < 0) { <br>
+					ball.vy = -ball.vy; <br>
+					} <br>
+					if (ball.x + ball.vx > canvas.width || ball.x + ball.vx < 0) { <br>
+					ball.vx = -ball.vx; <br>
+					}
+				</p>
+				<p>Посмотрим, как он выглядит в действии. Переместите мышь на холст, чтобы запустить анимацию.</p>
+				<iframe src="../sources/examples/frames/l6_frame_ex4.html" class="lab6frex4"></iframe>
+
+
+				<div><h2 class="section" id="M4">4. Ускорение</h2></div>
+				<p>Чтобы сделать движение более реальным, можно управлять скоростью, например так:</p>
+				<p class="code">
+					ball.vy *= .99; <br>
+					ball.vy += .25;
+				</p>
+				<p>Это замедляет вертикальную скорость каждого кадра, так что мяч будет просто отскакивать от пола в конце.</p>
+				<iframe src="../sources/examples/frames/l6_frame_ex5.html" class="lab6frex4"></iframe>
+
+				<div><h2 class="section" id="M5">5. Скользящий эффект</h2></div>
+				<p>До сих пор мы использовали метод <code>clearRect</code>, когда очищали предыдущий кадр. Если заменить этот метод на <code>fillRect</code> с полу-прозрачным стилем, можно легко создать эффект скольжения.</p>
+				<p class="code">
+					ctx.fillStyle = 'rgba(255, 255, 255, 0.3)'; <br>
+					ctx.fillRect(0, 0, canvas.width, canvas.height);
+				</p><br>
+				<iframe src="../sources/examples/frames/l6_frame_ex6.html" class="lab6frex4"></iframe>
+				<p class="subsection">Добавление управления мышью</p>
+				<p>Чтобы получить некоторый контроль над мячом, мы можем заставить его следовать за нашей мышью, например, с помощью события <code>mousemove</code> . Событие <code>click</code> отпускает мяч и позволяет ему снова прыгать</p>
+				<p class="code">
+					var canvas = document.getElementById('canvas'); <br>
+					var ctx = canvas.getContext('2d'); <br>
+					var raf; <br>
+					var running = false; <br>
+					<br>
+					var ball = { <br>
+					x: 100, <br>
+					y: 100, <br>
+					vx: 5, <br>
+					vy: 1, <br>
+					radius: 25, <br>
+					color: 'blue', <br>
+					draw: function() { <br>
+					ctx.beginPath(); <br>
+					ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true); <br>
+					ctx.closePath(); <br>
+					ctx.fillStyle = this.color; <br>
+					ctx.fill(); <br>
+					} <br>
+					}; <br>
+					<br>
+					function clear() { <br>
+					ctx.fillStyle = 'rgba(255, 255, 255, 0.3)'; <br>
+					ctx.fillRect(0,0,canvas.width,canvas.height); <br>
+					} <br>
+					<br>
+					function draw() { <br>
+					clear(); <br>
+					ball.draw(); <br>
+					ball.x += ball.vx; <br>
+					ball.y += ball.vy; <br>
+					<br>
+					if (ball.y + ball.vy > canvas.height || ball.y + ball.vy < 0) { <br>
+					ball.vy = -ball.vy; <br>
+					} <br>
+					if (ball.x + ball.vx > canvas.width || ball.x + ball.vx < 0) { <br>
+					ball.vx = -ball.vx; <br>
+					} <br>
+					<br>
+					raf = window.requestAnimationFrame(draw); <br>
+					} <br>
+					<br>
+					canvas.addEventListener('mousemove', function(e) { <br>
+					if (!running) { <br>
+					clear(); <br>
+					ball.x = e.clientX; <br>
+					ball.y = e.clientY; <br>
+					ball.draw(); <br>
+					} <br>
+					}); <br>
+					<br>
+					canvas.addEventListener('click', function(e) { <br>
+					if (!running) { <br>
+					raf = window.requestAnimationFrame(draw); <br>
+					running = true; <br>
+					} <br>
+					}); <br>
+					<br>
+					canvas.addEventListener('mouseout', function(e) { <br>
+					window.cancelAnimationFrame(raf); <br>
+					running = false; <br>
+					}); <br>
+					<br>
+					ball.draw();
+				</p>
+				<p>Переместите шар с помощью мыши и отпустите его одним щелчком.</p>
+				<iframe src="../sources/examples/frames/l6_frame_ex7.html" class="lab6frex4"></iframe>
+
+				<div><h2 class="section" id="M6">6. Оптимизация canvas</h2></div>
+
+				<p class="subsection">Предварительно отрисуйте похожие примитивы или повторяющиеся объекты на <code>offscreen canvas</code>.</p>
+				<p>Если вы повторяете одни и те же операции рисования в каждом кадре анимации, рассмотрите возможность их выгрузки на <code>offscreen canvas</code>. Затем вы можете визуализировать закадровое изображение на свой основной canvas так часто, как это необходимо, без необходимости повторять шаги, необходимые для его генерации.</p>
+				<p class="code">
+					myCanvas.offscreenCanvas = document.createElement('canvas'); <br>
+					myCanvas.offscreenCanvas.width = myCanvas.width; <br>
+					myCanvas.offscreenCanvas.height = myCanvas.height; <br>
+					<br>
+					myCanvas.getContext('2d').drawImage(myCanvas.offScreenCanvas, 0, 0);
+				</p>
+				<p class="subsection">Избегайте координат с плавающей точкой и используйте вместо них целые числа</p>
+				<p>Субпиксельный рендеринг происходит при рендеринге объектов на canvas без целых значений.</p>
+				<p class="code">ctx.drawImage(myImage, 0.3, 0.5);</p>
+				<p>Это заставляет браузер выполнять дополнительные вычисления для создания эффекта сглаживания. Чтобы избежать этого, обязательно округлите все координаты, используемые в вызовах <code>drawImage()</code>, например, с помощью <code>Math.floor()</code>.</p>
+				<p class="subsection">Не масштабируйте изображения в drawImage</p>
+				<p>При загрузке кэшируйте изображения разных размеров на <code>offscreen</code> <code>canvas</code>, а не постоянно масштабируйте их в <code>drawImage()</code>.</p>
+				<p class="subsection">Используйте несколько слоев canvas для сложных сцен</p>
+				<p>Вы можете обнаружить, что некоторые объекты в вашем приложении нужно часто перемещать или менять, в то время как другие остаются относительно статичными. Возможной оптимизацией в этой ситуации является наложение ваших элементов с использованием нескольких элементов <code>&lt;canvas&gt;</code>.</p>
+				<p>Например, допустим, у вас есть игра с пользовательским интерфейсом наверху, геймплеем в середине и статическим фоном внизу. В этом случае вы можете разбить свою игру на три слоя <code>&lt;canvas&gt;</code>. Пользовательский интерфейс будет меняться только при изменении пользователем, слой с игровым процессом будет меняться с каждым новым кадром, а фон останется в основном неизменным.</p>
+				<p class="code">
+					&lt;div id="stage"&gt; <br>
+					&lt;canvas id="ui-layer" width="480" height="320"&gt;&lt;/canvas&gt; <br>
+					&lt;canvas id="game-layer" width="480" height="320"&gt;&lt;/canvas&gt; <br>
+					&lt;canvas id="background-layer" width="480" height="320"&gt;&lt;/canvas&gt; <br>
+					&lt;/div&gt; <br>
+					 <br>
+					&lt;style&gt; <br>
+					#stage { <br>
+					width: 480px; <br>
+					height: 320px; <br>
+					position: relative; <br>
+					border: 2px solid black; <br>
+					} <br>
+					 <br>
+					canvas { position: absolute; } <br>
+					#ui-layer { z-index: 3; } <br>
+					#game-layer { z-index: 2; } <br>
+					#background-layer { z-index: 1; } <br>
+					&lt;/style&gt;
+				</p>
+				<p class="subsection">Используйте простой CSS для больших фоновых изображений</p>
+				<p>Если у вас есть статическое фоновое изображение, вы можете нарисовать его на простом элементе &lt;div&gt;, используя свойство CSS <code>background</code>, и расположить его под <code>canvas</code>. Это сведет на нет необходимость рендеринга фона на <code>canvas</code> на каждом тике.</p>
+				<p class="subsection">Масштабирование холста с использованием CSS-преобразований</p>
+				<p>CSS-преобразования быстрее, поскольку они используют графический процессор. В идеале, не стоит не масштабировать <code>canvas</code>, или можно использовать меньший <code>canvas</code> и увеличивать его при необходимости, но не уменьшать.</p>
+				<p class="code">
+					var scaleX = window.innerWidth / canvas.width; <br>
+					var scaleY = window.innerHeight / canvas.height; <br>
+					<br>
+					var scaleToFit = Math.min(scaleX, scaleY); <br>
+					var scaleToCover = Math.max(scaleX, scaleY); <br>
+					<br>
+					stage.style.transformOrigin = '0 0'; //scale from top left <br>
+					stage.style.transform = 'scale(' + scaleToFit + ')';
+				</p>
+				<p class="subsection">Отключите прозрачность</p>
+				<p>Если ваше приложение использует <code>canvas</code> и не нуждается в прозрачном фоне, установите для параметра <code>alpha</code> значение <code>false</code> при создании контекста рисования с помощью <code>HTMLCanvasElement.getContext()</code>. Эта информация может использоваться браузером для оптимизации рендеринга.</p>
+				<p class="code">
+					var ctx = canvas.getContext('2d', { alpha: false });
+				</p>
+				<p class="subsection">Другие советы</p>
+				<ul class="practictodo">
+					<li>Объединяйте запросы к <code>canvas</code>. Например, рисуйте одну ломанную линию вместо нескольких отдельных линий.</li>
+					<li>Избегайте ненужных изменений состояния <code>canvas</code>.</li>
+					<li>Отображайте только изменения экрана, а не заново перерисовывайте.</li>
+					<li>По возможности избегайте свойства <code>shadowBlur</code>.</li>
+					<li>Избегайте рендеринга текста, когда это возможно.</li>
+					<li>Попробуйте разные способы очистки <code>canvas</code> (<code>clearRect()</code>, или <code>fillRect()</code>, или изменение размера <code>canvas</code>).</li>
+					<li>С анимациями используйте <code>window.requestAnimationFrame()</code> вместо <code>window.setInterval()</code>.</li>
+					<li>Будьте осторожны с тяжелыми физическими библиотеками.</li>
+				</ul>
+
+				
+
+				<h2 id="practic" class="practic">Практика</h2>
+
+				<p class="practictext">Цель работы: Изучение анимаций, создание и анимирование элементов.</p>
+
+				<h2 class="section">Задание к лабораторной работе №6:</h2>
+				<p class="subsection">Задание №1:</p>
+
+				<p class="subsubsection">Вариант №1 (нечетные по списку):</p>
+				<ul class="practictodo">
+					<li>Анимируйте галерею, которую вы сделали в 4-ой лабораторной работе.</li>
+					<li>Посмотрите на начало 2-ой лабораторной работы, сделайте подобную анимацию, но с разными фигурами (не менее 3).</li>
+				</ul>
+
+				<p class="subsubsection">Вариант №2 (четные по списку):</p>
+				<ul class="practictodo">
+					<li>Анимируйте снегопад, который вы сделали в 5-ой лабораторной работе.</li>
+					<li>Доделайте модель солнечной системы из этой лабораторной работы.</li>
+				</ul>			
+				
+				<p class="subsection">Задание №2:</p>
+				<ul>
+					<li>Используя примеры из этой лабораторной работы, усовершенствуйте данный код и создайте свою игру арканоид.</li>
+				</ul>
+
+				<h2 class="section">Отчет по лабораторной работе должен содержать:</h2>
+
+				<ul class="practictodo">
+					<li>Скриншоты и описание выполнения лабораторной работы попунктно;</li>
+					<li>Полный скриншот получившейся веб-страницы;</li>
+					<li>HTML, CSS и JavaScript код с необходимыми объяснениями.</li>
+				</ul>
+				<p class="gotop"><a href="#header">Вернуться в начало</a></p>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer">
+		<div class="container">
+			<div class="row justify-content-between">
+				<div class="col-12 col-sm-auto">
+					Dnipro National University |  Laboratory Workshop &copy; 2020
+				</div>
+				<div class="col-12 col-sm-auto">
+					Designed by Zymeth
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script src="../sources/js/classie.js"></script>
+	<script src="../sources/js/gnmenu.js"></script>
+	<script src="../sources/js/example.js"></script>
+	<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/6859/tween.min_1.js'></script>
+  
+  
+<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r11/Stats.js"></script>
+<script src="../sources/js/canvasstars.js"></script>
+	<script>
+		new gnMenu(document.getElementById('gn-menu'));
+	</script>
+
+
+</body>
+</html>

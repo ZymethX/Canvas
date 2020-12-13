@@ -1,0 +1,43 @@
+.tabs {
+	width: auto;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+}
+
+.tabs>input[type="radio"] {    
+	display: none;
+}
+
+.tabs>input[type="radio"]:checked+label {
+	background-color: #DE5363;
+}
+
+.tabs>div {
+	display: none;
+}
+
+#tab-btn-1:checked~#content-1,
+#tab-btn-2:checked~#content-2 {
+	display: block;
+}
+
+.tabs>label {
+	color: #c9c9d9;
+	display: inline-block;	
+	text-align: center;
+	vertical-align: middle;
+	user-select: none;
+	background-color: inherit;
+	width: 45%;
+	font-size: 16px;
+	line-height: 60px;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+	cursor: pointer;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+
+.tabs>label:first-of-type {
+	margin-left: 0;
+}

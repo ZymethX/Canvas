@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Лабораторная работа 5</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/main.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/tables.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/tabs.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/component.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/example.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Cardo" rel="stylesheet">
+
+	<script src="../sources/js/modernizr.custom.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<style>
+		canvas#canvas {
+			background-color: #1C1E20;
+			border-radius: 20px;
+			margin: 20px auto 0px;
+			max-width: 80%;	
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<ul id="gn-menu" class="gn-menu-main">
+			<li class="gn-trigger">
+				<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+				<nav class="gn-menu-wrapper">
+					<div class="tabs">
+						<input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
+						<label for="tab-btn-1">Меню</label>
+						<input type="radio" name="tab-btn" id="tab-btn-2" value="">
+						<label for="tab-btn-2">Лабы</label>
+
+						<div id="content-1">
+							<div class="gn-scroller">
+								<ul class="gn-menu">
+									<li><a href="#header"><span>1</span>Сохранение состояния</a>
+									<li><a href="#M2"><span>2</span>Трансляция</a>
+									<li><a href="#M3"><span>3</span>Поворот</a>
+									<li><a href="#M4"><span>4</span>Масштабирование</a>
+									<li><a href="#M5"><span>5</span>Матричное преобразование</a>
+									<li><a href="#M6"><span>6</span>Композиция и обрезка</a>
+									<li><a href="#practic"><span>-</span>Практика</a>
+									
+								</ul>
+							</div>
+						</div>
+
+						<div id="content-2">
+							<div class="gn-scroller">
+								<ul class="gn-menu">
+									<li><a href="lab_1.html"><span>1</span>Основы canvas</a></li>
+									<li><a href="lab_2.html"><span>2</span>Создание различных фигур</a></li>
+									<li><a href="lab_3.html"><span>3</span>Стили и цвета</a></li>
+									<li><a href="lab_4.html"><span>4</span>Изображения и текст</a></li>
+									<li><a href="lab_5.html"><span>5</span>Трансформации</a></li>
+									<li><a href="lab_6.html"><span>6</span>Анимации</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /gn-scroller -->
+				</nav>
+			</li>
+
+			<div class="container-fluid">
+				<div class="row justify-content-end">
+					<div class="col-12 col-sm-auto ml-sm-auto"><img class="logo" src="../sources/images/logo.png"></div>
+					<div class="col-1 col-sm-auto ml-sm-auto d-none d-sm-block"><a href="#header" class="up"><i class="fa fa-chevron-circle-up" aria-hidden="true"></i> Вверх</a></div>
+				</div>
+			</div>
+		</ul>
+
+		<header id="header">
+			<h1>Лабораторная работа 5<span>Изучение трансформации элементов canvas, компоновка элементов на полотне</span></h1>
+		</header>
+	</div><!-- /box -->
+
+	<div class="container">
+		<div class="row">
+			<div class="content col-12">
+
+				<div><h2 class="section" id="M1">1. Сохранение и восстановление состояния</h2></div>
+
+				<p>До сих пор использовали только сетку по умолчанию и изменили размер всего холста для наших нужд. При преобразованиях существуют более мощные способы изменения исходных координат в различные положение, поворот сетки и даже масштабирование.</p>
+
+				<div class="center"><iframe src="../sources/examples/frames/l5_main_canvas.html" class="iframemain"></iframe></div>
+				<p class="cuptionexample">Пример трансформации и анимации элементов на полотне <code>canvas</code></p>
+				
+				<p>Прежде чем перейти к методам преобразования, давайте рассмотрим два других метода, которые необходимы, когда вы начинаете создавать все более сложные рисунки.</p>
+				<p><code>save()</code> - Сохраняет все состояние холста.</p>
+				<p><code>restore()</code> - Восстанавливает последнее сохраненное состояние холста.</p>
+				<p>Состояние холста сохраняется в стеке. Каждый раз, когда вызывается метод <code>save()</code>, текущее состояние отрисовки записывается в стек. Состояние отрисовки содержит:</p>
+				<ul>
+					<li>Трансформации, которые были применены (например, <code>translate</code>, <code>rotate</code> and <code>scale</code> – см. ниже).</li>
+					<li>Текущее значение следующих атрибутов: <code>strokeStyle</code>, <code>fillStyle</code>, <code>globalAlpha</code>, <code>lineWidth</code>, <code>lineCap</code>, <code>lineJoin</code>, <code>miterLimit</code>, <code>lineDashOffset</code>, <code>shadowOffsetX</code>, <code>shadowOffsetY</code>, <code>shadowBlur</code>, <code>shadowColor</code>, <code>globalCompositeOperation</code>, <code>font</code>, <code>textAlign</code>, <code>textBaseline</code>, <code>direction</code>, <code>imageSmoothingEnabled</code>.</li>
+					<li>Текущее значение границ вырезанного холста (<code>clipping path</code>), которые будут рассматриваться в следующем разделе.</li>
+				</ul>
+				<p>Вы можете вызывать метод <code>save()</code> столько раз, сколько захотите. В то же время, при вызове метода <code>restore()</code> последнее сохранённое состояние будет считано из стека, и все сохранённые настройки будут восстановлены.</p>
+				<p class="subsection">Пример сохранения и восстановления состояния холста</p>
+				<p>Здесь показано, как функционирует сохранение в стек состояния отрисовки на примере последовательной отрисовки набора прямоугольников.</p>
+				<p class="code">
+					var ctx = document.getElementById('canvas').getContext('2d'); <br>
+					<br>
+					ctx.fillRect(0, 0, 150, 150);   // рисуем прямоугольник с настройками по умолчанию <br>
+					ctx.save();                     // сохраняем состояние <br>
+					<br>
+					ctx.fillStyle = '#09F';         // вносим изменения в настройки <br>
+					ctx.fillRect(15, 15, 120, 120); // рисуем прямоугольник с новыми настройками <br>
+					ctx.save();                     // сохраняем состояние <br>
+					<br>
+					ctx.fillStyle = '#FFF';         // вносим изменения в настройки <br>
+					ctx.globalAlpha = 0.5;  <br>
+					ctx.fillRect(30, 30, 90, 90);   // рисуем прямоугольник с новыми настройками <br>
+					<br>
+					ctx.restore();                  // возвращаемся к предыдущим настройкам <br>
+					ctx.fillRect(45, 45, 60, 60);   // рисуем прямоугольник с восстановленными настройками <br>
+					<br>
+					ctx.restore();                  // возвращаемся к начальным настройкам <br>
+					ctx.fillRect(60, 60, 30, 30);   // рисуем прямоугольник с изначальными настройками <br>
+					}
+				</p>
+				<p>Сначала рисуется большой прямоугольник с настройками по умолчанию. Затем сохраняем состояние холста, после чего изменяем цвет заливки. Затем рисуем второй синий прямоугольник меньшего размера и опять сохраняем состояние. Снова изменяем какие-то настройки и рисуем третий полупрозрачный белый прямоугольник.</p>
+				<p>До сих пор действия ничем не отличались от тех, что делали в предыдущем разделе. Однако, как только сделали первый вызов <code>restore()</code>, последнее сохранённое состояние отрисовки было восстановлено из стека, вернув все сохранённые настройки. Если бы не сохранили предыдущее состояние, используя <code>save()</code>, нам бы пришлось менять цвет заливки и настройки прозрачности вручную для возврата к предыдущему состоянию. Для каких-нибудь двух простых свойств это, может быть, сделать не так сложно. Но если таких своиств гораздо больше, это чревато очень быстрым разрастанием кода.</p>
+				<p>Когда второй вызов <code>restore()</code> сделан, изначальное состояние (то самое, которое было сделано перед первым вызовом <code>save</code>) восстанавливается и последний нарисованный прямоугольник внось становится чёрным.</p>
+
+				<img style="padding-bottom: 0px" src="../sources/examples/pic/l5squares.png" alt="" class="center">
+				
+				<div><h2 class="section" id="M2">2. Трансляция</h2></div>
+
+				<p>Первый метод для трасформирования холста <code>translate()</code>. Он используется для перемещения холста в любую точку нашей сетки.</p>
+				<p><code>translate(x, y)</code> - Перемещение холста на сетке. <code>x</code> и <code>y</code> - смещение по горизонтали и вертикали соответственно.</p>
+				<p>Неплохая идея - сохранять <code>canvas</code> <code>state</code> перед использованием любых трансформаций. Обычно удобнее использовать метод <code>restore</code>, чем выполнять обратные преобразования, чтобы вернуться к начальному состоянию. Кроме того, если вы выполняете преобразования внутри цикла не используя <code>save</code> и <code>restore</code>, вы рискуете потерять часть рисунка, потому что он был нарисован за пределами края холста.</p>
+				<img style="padding-bottom: 0px" src="../sources/examples/pic/Canvas_grid_translate.png" alt="" class="center">
+				<p class="subsection">Пример использования <code>translate</code></p>
+				<p>Этот пример демонстрирует некоторые преимущества при использовании смещения холста. Без использования метода <code>translate()</code> все прямоугольники будут отрисованы в одинаковой позиции <code>(0,0)</code>. Метод <code>translate()</code> дает возможность размещения прямоугольника в любой позиции без изменения параметров функции <code>fillRect()</code>. Это может дать некоторое упрощение для понимания и использования.</p>
+				<p>Внутри функции <code>draw()</code> вызываем <code>fillRect()</code> девять раз, используя два цикла <code>for</code>. Каждый раз сохраняем состояние холста, смещаем его, рисуем прямоугольник, а затем восстанавливаем исходное состояние. Заметьте, что <code>fillRect()</code> всегда использует одни и те же параметры, а изменение позиции фигуры осуществляется с помощью <code>translate()</code>.</p>
+				<p class="code">
+					var ctx = document.getElementById('canvas').getContext('2d'); <br>
+					for (var i = 0; i < 3; i++) { <br>
+					for (var j = 0; j < 3; j++) { <br>
+					ctx.save(); <br>
+					ctx.fillStyle = 'rgb(' + (51 * i) + ', ' + (255 - 51 * i) + ', 255)'; <br>
+					ctx.translate(10 + j * 50, 10 + i * 50); <br>
+					ctx.fillRect(0, 0, 25, 25); <br>
+					ctx.restore(); <br>
+					} <br>
+					}
+				</p>
+				<img style="padding-bottom: 0px" src="../sources/examples/pic/l5ex2sq.png" alt="" class="center">
+
+				<div><h2 class="section" id="M3">3. Поворот</h2></div>
+				<p>Второй метод трансформации <code>rotate()</code>. Он используется для поворота нашего холста.</p>
+				<p><code>rotate(angle)</code> - Поворачивает наш холст по часовой стрелке вокруг начальной точки на угол <code>anglе</code> в радианах.</p>
+				<p>Центр поворота - всегда начало координат. Для изменения координат центра должны сместить холст, используя метод <code>translate()</code>.</p>
+				<p class="subsection">Пример использования <code>rotate</code></p>
+				<p>В этом примере сначала используем <code>rotate()</code> для поворота прямоугольника относительно начала координат, а затем, используя <code>translate()</code> совместно с <code>rotate()</code> поворачиваем прямоугольник относительно его центра.</p>
+				<p class="note">Углы измеряются в радианах, а не в градусах. Для преобразования единиц используйте следующую формулу: <code>radians = (Math.PI/180)*degrees</code>.</p>
+				<p class="code">
+					var ctx = document.getElementById('canvas').getContext('2d'); <br>
+					<br>
+					// left rectangles, rotate from canvas origin <br>
+					ctx.save(); <br>
+					// blue rect <br>
+					ctx.fillStyle = '#0095DD'; <br>
+					ctx.fillRect(30, 30, 100, 100);  <br>
+					ctx.rotate((Math.PI / 180) * 25); <br>
+					// grey rect <br>
+					ctx.fillStyle = '#4D4E53'; <br>
+					ctx.fillRect(30, 30, 100, 100); <br>
+					ctx.restore(); <br>
+					<br>
+					// right rectangles, rotate from rectangle center <br>
+					// draw blue rect <br>
+					ctx.fillStyle = '#0095DD'; <br>
+					ctx.fillRect(150, 30, 100, 100);   <br>
+					<br>
+					ctx.translate(200, 80); // translate to rectangle center  <br>
+					// x = x + 0.5 * width <br>
+					// y = y + 0.5 * height <br>
+					ctx.rotate((Math.PI / 180) * 25); // rotate <br>
+					ctx.translate(-200, -80); // translate back <br>
+					<br>
+					// draw grey rect <br>
+					ctx.fillStyle = '#4D4E53'; <br>
+					ctx.fillRect(150, 30, 100, 100);
+				</p>
+				<p>Для поворота прямоугольника относительно его центра сначала смещаем начало координат, выполняем поворот, а затем выполняем обратное смещение к точке 0,0, и наконец рисуем прямоугольник.</p>
+ 
+				<img src="../sources/examples/pic/l5ex3sq.png" alt="" class="center">
+
+				<div><h2 class="section" id="M4">4. Масштабирование</h2></div>
+				<p>Следующий метод трансформации холста - <code>scaling</code>. Он используется для растяжения, сжатия и отражения координатной сетки. Он может использоваться для отрисовки растянутых или сжатых по осям фигур и изображений.</p>
+				<p><code>scale(x, y)</code> - Масштабирует координатную сетку холста по горизонтали и вертикали. Оба параметра - вещественные числа. Значения меньше 1.0 уменьшают, а больше 1.0 увеличивают масштаб сетки. Значение 1.0 не изменяет его.</p>
+				<p>Используя отрицательные значения вы можете зеркально отразить направление осей. Например, используя <code>translate(0,canvas.height); scale(1,-1);</code> вы получите хорошо известную декартову систему координат с началом в верхнем левом углу.</p>
+				<p>По умолчанию единица координатной сетки точно соответствует одному пикселю. Если же вы, например, зададите масштабный коэффициент 0.5, то единица сетки будет равна половине пикселя, и нарисованная фигура будет иметь размер в два раза меньше оригинала. Наоборот, если задать масштабный коэффициент 2.0, единица сетки будет соответствовать двум пикселям, а нарисованная фигура станет в два раза больше.</p>
+				<p class="subsection">Пример использования <code>scale</code></p>
+				<p>В этом примере нарисуем прямоугольники, используя разные масштабные коэффициенты.</p>
+				<p class="code">
+					var ctx = document.getElementById('canvas').getContext('2d'); <br>
+					<br>
+					// рисуем масштабированный прямоугольник. <br>
+					ctx.save(); <br>
+					ctx.scale(10, 3); <br>
+					ctx.fillRect(1, 10, 10, 10); <br>
+					ctx.restore(); <br>
+					<br>
+					// размещаем текст, отраженный по горизонтали <br>
+					ctx.scale(-1, 1); <br>
+					ctx.font = '48px serif'; <br>
+					ctx.fillText('MDN', -135, 120);
+				</p>
+				<img src="../sources/examples/pic/l5textex.png" alt="" class="center">
+
+				<div><h2 class="section" id="M5">5. Матричное преобразование</h2></div>
+
+				<p>Рассмотрим метод, который вызывает изменения в соответствии с матрицей преобразования.</p>
+				<p><code>transform(a, b, c, d, e, f)</code> - Накладывает матрицу преобразования, заданную параметрами, на текущую матрицу. Матрица преобразования задается следующим образом:</p>
+
+				<img src="../sources/examples/pic/matrix.png" alt="" class="center">
+
+				<p>Если какой-либо из аргументов является бесконечным, то матрица преобразования должна быть помечена как бесконечная, а не как метод, бросающий исключение.</p>
+				<p>Параметры функции:</p>
+				<ul>
+					<li><code>a (m11)</code> - Горизонтальное масштабирование.</li>
+					<li><code>b (m12)</code> - Горизонтальный перекос.</li>
+					<li><code>c (m21)</code> - Вертикальный перекос.</li>
+					<li><code>d (m22)</code> - Вертикальное масштабирование.</li>
+					<li><code>e (dx)</code> - Горизонтальное движение.</li>
+					<li><code>f (dy)</code> - Вертикальное движение.</li>
+				</ul>
+				<p><code>setTransform(a, b, c, d, e, f)</code> - Сбрасывает текущую матрицу преобразования, а затем вызывает <code>transform()</code> в соответствии с аргументами.</p>
+				<p><code>resetTransform()</code> - Сбрасывает текущую матрицу преобразования к значению по умолчанию. Аналогично вызову<code> ctx.setTransform(1, 0, 0, 1, 0, 0)</code>;</p>
+				<p class="subsection">Пример использования <code>transform</code> и <code>setTransform</code></p>
+				<p class="code">
+					var ctx = document.getElementById('canvas').getContext('2d'); <br>
+					<br>
+					var sin = Math.sin(Math.PI / 6); <br>
+					var cos = Math.cos(Math.PI / 6); <br>
+					ctx.translate(100, 100); <br>
+					var c = 0; <br>
+					for (var i = 0; i <= 12; i++) { <br>
+					c = Math.floor(255 / 12 * i); <br>
+					ctx.fillStyle = 'rgb(' + c + ', ' + c + ', ' + c + ')'; <br>
+					ctx.fillRect(0, 0, 100, 10); <br>
+					ctx.transform(cos, sin, -sin, cos, 0, 0); <br>
+					} <br>
+					<br>
+					ctx.setTransform(-1, 0, 0, 1, 100, 100); <br>
+					ctx.fillStyle = 'rgba(255, 128, 255, 0.5)'; <br>
+					ctx.fillRect(0, 50, 100, 100);
+				</p>
+				<img src="../sources/examples/pic/l5ex5.png" alt="" class="center">
+
+				<div><h2 class="section" id="M6">6. Композиция и обрезка контуров</h2></div>
+
+				<p>можем не только рисовать новые фигуры за существующие формы, но также можем использовать его, чтобы замаскировать определенные участки, очистить разделы от холста (не ограничивается прямоугольниками, как <code>clearRect()</code> <code>method does</code>) и другое.</p>
+				<p><code>globalCompositeOperation = type</code> - Это задает Тип операции композиции для применения при разработке новых форм, где Тип является строкой, идентифицирующей, какие из двенадцати операций композитинг в использовании.</p>
+
+				<p>Отсеченный контур похож на обычную форму холста, но он действует как маска, чтобы скрыть нежелательные части фигур. Это визуализируется на изображении снизу. Все, что выходит за пределы звезды, не будет нарисовано на холсте.</p>
+				<img src="../sources/examples/pic/Canvas_clipping_path.png" alt="" class="center">
+				<p>Если сравниваем отсеченный контур со свойством globalCompositeOperation на изображении, видим два режима композитинга, которые достигают более или менее того же эффекта в исходном и исходном состоянии.   Наиболее важные различия между ними заключаются в том, что отсечение контура фактически  никогда не обращается к холсту и контур обрезки никогда не влияет добавление новых форм. Это делает обрезку контура идеальным для рисования нескольких фигур в ограниченной области.</p>
+				<p>В лабораторной о рисовании форм, названы только <code>stroke()</code> и <code>fill()</code> методы, но есть третий способ можно использовать с контурами, так называемый <code>clip()</code>.</p>
+				<p><code>clip()</code> - Преобразует текущий выстраиваемый контур в отсечённый контур.</p>
+				<p>Используйте <code>clip()</code> вместо <code>closePath()</code> для закрытия контура и его преобразования в отсечённый контур вместо создания заполняющего  или обрамляющего контура.</p>
+				По умолчанию элемент <code>canvas</code> использует отсечённый контур, который в точности совпадает по размеру с размером самого холста. Это означает, что никакого отсечения попросту не произойдёт.
+				<p class="subsection">Пример обрезки</p>
+				<p>В этом примере будем использовать круговую обрезку контура, чтобы ограничить рисование набора случайных звезд определенной областью.</p>
+				<p class="code">
+					var ctx = document.getElementById('canvas').getContext('2d'); <br>
+					ctx.fillRect(0, 0, 150, 150); <br>
+					ctx.translate(75, 75); <br>
+					 <br>
+					// Create a circular clipping path <br>
+					ctx.beginPath(); <br>
+					ctx.arc(0, 0, 60, 0, Math.PI * 2, true); <br>
+					ctx.clip(); <br>
+					 <br>
+					// draw background <br>
+					var lingrad = ctx.createLinearGradient(0, -75, 0, 75); <br>
+					lingrad.addColorStop(0, '#232256'); <br>
+					lingrad.addColorStop(1, '#143778'); <br>
+					 <br>
+					ctx.fillStyle = lingrad; <br>
+					ctx.fillRect(-75, -75, 150, 150); <br>
+					 <br>
+					// draw stars <br>
+					for (var j = 1; j < 50; j++) { <br>
+					ctx.save(); <br>
+					ctx.fillStyle = '#fff'; <br>
+					ctx.translate(75 - Math.floor(Math.random() * 150), <br>
+					75 - Math.floor(Math.random() * 150)); <br>
+					drawStar(ctx, Math.floor(Math.random() * 4) + 2); <br>
+					ctx.restore(); <br>
+					} <br>
+					 <br>
+					} <br>
+					 <br>
+					function drawStar(ctx, r) { <br>
+					ctx.save(); <br>
+					ctx.beginPath(); <br>
+					ctx.moveTo(r, 0); <br>
+					for (var i = 0; i < 9; i++) { <br>
+					ctx.rotate(Math.PI / 5); <br>
+					if (i % 2 === 0) { <br>
+					ctx.lineTo((r / 0.525731) * 0.200811, 0); <br>
+					} else { <br>
+					ctx.lineTo(r, 0); <br>
+					} <br>
+					} <br>
+					ctx.closePath(); <br>
+					ctx.fill(); <br>
+					ctx.restore();
+				</p>
+				<p>В первых нескольких строках кода мы рисуем черный прямоугольник размером с холстом в качестве фона, а затем переводим начало координат в центр. Затем мы создаем круговой обтравочный контур, рисуя дугу и вызывающий <code>clip()</code>. Обрезанные контуры также являются частью состояния сохранения холста. Если бы мы хотели сохранить исходный обтравочный контур, мы могли бы сохранить состояние холста перед созданием нового.</p>
+				<p>Все, что нарисовано после создания отсеченного контура, появится только внутри этого пути. Вы можете видеть это четко в линейном градиенте, который нарисован далее. После этого набирается набор из 50 случайно расположенных и масштабированных звезд, используя <code>drawStar()</code>. Снова звезды появляются только в пределах определенного обтравочного контура.</p>
+				<img src="../sources/examples/pic/l5stars.png" alt="" class="center">
+
+				<h2 id="practic" class="practic">Практика</h2>
+
+				<p class="practictext">Цель работы: Изучение трансформации элементов canvas, компоновка элементов на полотне.</p>
+				<h2 class="section">Задание к лабораторной работе №5:</h2>
+				<p class="subsection">Задание №1:</p>
+				<p>Создайте свой графиеский редактор с помощью технологии <code>canvas</code>, он должен содержать:</p>
+				<ul class="practictodo">
+					<li>Выбор формы кисти;</li>
+					<li>Выбор размера кисти;</li>
+					<li>Выбор цвета кисти;</li>
+					<li>Выбор прозрачности кисти;</li>
+					<li>Возможность рисовать прямоугольники, окружности и другие геометрические фигуры;</li>
+					<li>Кнопка для очищения полотна;</li>
+					<li>Ластик;</li>
+					<li>Возможность добавлять текст на полотно.</li>
+				</ul>
+				
+				<p class="subsection">Задание №2:</p>
+				<p>Создайте новый <code>canvas</code>, используя трансформации элементов, нарисуйте снегопад со следующими критериями:</p>
+				<ul class="practictodo">
+					<li>Снежинки разных геометрических форм и размеров;</li>
+					<li>Снежинки разной прозрачности, оттенков;</li>
+					<li>Задайте картине фон;</li>
+					<li>Обрежьте изображения используя <code>clip()</code>.</li>
+				</ul>
+				
+				<h2 class="section">Отчет по лабораторной работе должен содержать:</h2>
+
+				<ul class="practictodo">
+					<li>Скриншоты и описание выполнения лабораторной работы попунктно;</li>
+					<li>Полный скриншот получившейся веб-страницы;</li>
+					<li>HTML, CSS и JavaScript код с необходимыми объяснениями.</li>
+				</ul>
+				<p class="gotop"><a href="#header">Вернуться в начало</a></p>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer">
+		<div class="container">
+			<div class="row justify-content-between">
+				<div class="col-12 col-sm-auto">
+					Dnipro National University |  Laboratory Workshop &copy; 2020
+				</div>
+				<div class="col-12 col-sm-auto">
+					Designed by Zymeth
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script src="../sources/js/classie.js"></script>
+	<script src="../sources/js/gnmenu.js"></script>
+	<script src="../sources/js/example.js"></script>
+	<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/6859/tween.min_1.js'></script>
+  
+  
+<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r11/Stats.js"></script>
+<script src="../sources/js/canvasstars.js"></script>
+	<script>
+		new gnMenu(document.getElementById('gn-menu'));
+	</script>
+
+
+</body>
+</html>

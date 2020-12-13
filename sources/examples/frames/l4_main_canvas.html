@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		body {	
+			overflow: hidden;
+		}
+		canvas {
+			background: black;
+      width: 100%;
+      max-height: 400px;
+      height: 400px;
+		}
+	</style>
+</head>
+<body>
+	<canvas id='c' width="800px" height="400px"></canvas>	
+  
+	<script> 
+		window.requestAnimationFrame =
+    window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame;
+    var canvas = document.getElementById("c"),
+    ctx = canvas.getContext("2d"),
+    w = (canvas.width),
+    h = (canvas.height),
+    logoParticles = [],
+    particleIndex = 0,
+    logo = new Image(),
+    hue = 0;
+    function Particle(x, y) {
+      this.origX = this.x = x;
+      this.origY = this.y = y;
+      this.color = "white";
+      this.maxLife = this.random(20);
+      this.life = 0;
+      this.vx = this.random(-1, 1);
+      this.vy = this.random(-1, 1);
+      this.grav = 0.04;
+      this.index = particleIndex;
+      logoParticles[particleIndex] = this;
+      particleIndex++;
+    }
+    Particle.prototype = {
+      constructor: Particle,
+      draw: function () {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, 2, 2);
+        this.update();
+      },
+      update: function () {
+        if (this.life >= this.maxLife) {
+          logoParticles[this.index].reset();
+        }
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy += this.grav;
+        this.life++;
+      },
+      reset: function () {
+        this.x = this.origX;
+        this.y = this.origY;
+        this.life = 0;
+        this.color = "hsl(" + hue + ", 100%, 50%)";
+        this.vx = this.random(-1, 1);
+        this.vy = this.random(-1, 1);
+      },
+      random: function () {
+        var min = arguments.length == 1 ? 0 : arguments[0],
+        max = arguments.length == 1 ? arguments[0] : arguments[1];
+        return Math.random() * (max - min) + min;
+      }
+    };
+      logo.src = "data:image/png;base64,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";
+    logo.onload = function () {
+  var posX = (w - this.width) / 2, 
+  posY = (h - this.height) / 2;
+  ctx.drawImage(this, posX, posY);
+  var imgData = ctx.getImageData(0, 0, w, h),
+  pixels = imgData.data;
+  for (var y = 0; y < imgData.height; y += 3) {
+    for (var x = 0; x < imgData.width; x += 3) {
+      var alpha = pixels[(imgData.width * y + x) * 4 + 3];
+      if (alpha > 0) {
+        logoParticles.push(new Particle(x, y));
+      }
+    }
+  }
+  setTimeout(function () {
+    animate();
+  }, 8);
+};
+function animate() {
+  ctx.fillStyle = "rgba(0,0,0,.1)";
+  ctx.fillRect(0, 0, w, h);
+
+  for (var i in logoParticles) {
+    logoParticles[i].draw();
+  }
+  hue += 1;
+  window.requestAnimationFrame(animate);
+}
+</script>
+</body>
+</html>

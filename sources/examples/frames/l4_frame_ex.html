@@ -1,0 +1,43 @@
+<html>
+<head>
+  <style>
+    body{padding:0;margin:0;overflow: hidden;}
+    svg:not(:root){display:block}
+    .playable-code{background-color:#f4f7f8;border:none;border-left:6px solid #C43A59;border-width:medium medium medium 6px;height:100px;width:300px;padding:10px 10px 0}
+    .playable-canvas{border:1px solid #4d4e53;border-radius:2px}
+    .playable-buttons{text-align:left;width:300px;padding:5px 10px 5px 26px}
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="300" height="200" class="playable-canvas"></canvas>
+  <div class="playable-buttons">
+    <input id="edit" type="button" value="Edit" />
+    <input id="reset" type="button" value="Reset" />
+  </div>
+  <textarea id="code" class="playable-code">
+    ctx.font = "48px serif";
+    ctx.textBaseline = "hanging";
+  ctx.strokeText("Hello world", 0, 100);</textarea>
+  <script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    var textarea = document.getElementById("code");
+    var reset = document.getElementById("reset");
+    var edit = document.getElementById("edit");
+    var code = textarea.value;
+    function drawCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      eval(textarea.value);
+    }
+    reset.addEventListener("click", function() {
+      textarea.value = code;
+      drawCanvas();
+    });
+    edit.addEventListener("click", function() {
+      textarea.focus();
+    })
+    textarea.addEventListener("input", drawCanvas);
+    window.addEventListener("load", drawCanvas);
+  </script>
+</body>
+</html>

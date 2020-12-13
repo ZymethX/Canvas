@@ -1,0 +1,74 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+	<style type="text/css">
+		canvas{
+			width: 330px;
+			overflow: hidden;
+			border: solid #DE5363;
+			background-color: rgb(236,237,237); 
+		}
+	</style>
+	<script>
+		window.console = window.console || function(t) {};
+	</script>
+</head>
+<body>
+	<canvas id="cnvs" width="330px" height="200px"></canvas>
+	<script>
+		var canvas=document.getElementById('cnvs');
+		var ctx = canvas.getContext('2d');
+		ctx.moveTo(0,0);
+		ctx.lineWidth = 5; // толщина линии
+		canvas.onclick = function () {
+			var x=event.offsetX;
+			var y=event.offsetY;
+		ctx.lineTo(x, y); //рисуем линию
+		ctx.stroke();
+		}
+	</script>
+</body>
+</html>
+
+
+<!-- <html lang="en"><head>
+	<style>
+		#cnvs{
+			width: 400px;
+			height: 200px;
+			border: 1px solid red;
+			background: url(http://tutorial.promo.net.ua/images/js/setka.png);
+		}
+	</style>
+
+	<script>
+		window.console = window.console || function(t) {};
+	</script>
+
+	<script>
+		if (document.location.search.match(/type=embed/gi)) {
+			window.parent.postMessage("resize", "*");
+		}
+	</script>
+
+
+	<body translate="no">
+		<canvas id="cnvs" width="400px" height="200px"></canvas>
+		<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+
+		<script id="rendered-js">
+			var canvas = document.getElementById('cnvs');
+			var ctx = canvas.getContext('2d');
+			ctx.moveTo(0, 0);
+ctx.lineWidth = 10; // толщина линии
+
+canvas.onclick = function () {
+	var x = event.offsetX;
+	var y = event.offsetY;
+  ctx.lineTo(x, y); //рисуем линию
+  ctx.stroke();
+};
+
+</script>
+
+</body></html> -->

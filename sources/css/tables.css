@@ -1,0 +1,26 @@
+table.two {
+	display: flex;
+	justify-content: center;
+	align-self: center;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 16px;
+	background: white;
+	display: inline-block;
+	border-collapse: collapse;  
+	text-align: left;
+	background: #FFBDBD;
+	margin: 30px 0px;
+	overflow:scroll; 
+	overflow-y: hidden;
+}
+th.two {
+	font-weight: normal;
+	color: #333;
+	padding: 10px 15px;
+}
+td.two {
+	padding: 10px 15px;
+}
+tr:nth-child(2n).two {background: #F9FAFA;}
+td:nth-child(3n).two {border-right: 1px solid #F9FAFA;}
+td:nth-child(2n).two2 {border-right: 1px solid #F9FAFA;}

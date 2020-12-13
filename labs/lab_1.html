@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Лабораторная работа 1</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/main.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/tables.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/tabs.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/component.css">
+	<link rel="stylesheet" type="text/css" href="../sources/css/example.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Cardo" rel="stylesheet">
+
+	<script src="../sources/js/modernizr.custom.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<style>
+		canvas#ex1canvas { 
+			background-color: rgb(236,237,237); 
+			border: solid #DE5363;
+			margin: 10px 0px 20px;
+		}
+		canvas#ex3canvas {
+			background-color: rgb(236,237,237); 
+			border: solid #DE5363; 
+			margin: 10px 0px 20px;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<ul id="gn-menu" class="gn-menu-main">
+			<li class="gn-trigger">
+				<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+				<nav class="gn-menu-wrapper">
+					<div class="tabs">
+						<input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
+						<label for="tab-btn-1">Меню</label>
+						<input type="radio" name="tab-btn" id="tab-btn-2" value="">
+						<label for="tab-btn-2">Лабы</label>
+
+						<div id="content-1">
+							<div class="gn-scroller">
+								<ul class="gn-menu">
+									<li><a href="#header"><span>1</span>Основные понятия</a>
+									<li><a href="#M2"><span>2</span>Запасное содержимое</a>
+									<li><a href="#M3"><span>3</span>Рендеринг содержимого</a>
+									<li><a href="#M4"><span>4</span>Скелет шаблона</a>
+									<li><a href="#M5"><span>5</span>Прямоугольники</a>
+									<li><a href="#M6"><span>6</span>Линии</a>
+									<li><a href="#practic"><span>-</span>Практика</a>
+									
+								</ul>
+							</div>
+						</div>
+
+						<div id="content-2">
+							<div class="gn-scroller">
+								<ul class="gn-menu">
+									<li><a href="lab_1.html"><span>1</span>Основы canvas</a></li>
+									<li><a href="lab_2.html"><span>2</span>Создание различных фигур</a></li>
+									<li><a href="lab_3.html"><span>3</span>Стили и цвета</a></li>
+									<li><a href="lab_4.html"><span>4</span>Изображения и текст</a></li>
+									<li><a href="lab_5.html"><span>5</span>Трансформации</a></li>
+									<li><a href="lab_6.html"><span>6</span>Анимации</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /gn-scroller -->
+				</nav>
+			</li>
+
+			<div class="container-fluid">
+				<div class="row justify-content-end">
+					<div class="col-12 col-sm-auto ml-sm-auto"><img class="logo" src="../sources/images/logo.png"></div>
+					<div class="col-1 col-sm-auto ml-sm-auto d-none d-sm-block"><a href="#header" class="up"><i class="fa fa-chevron-circle-up" aria-hidden="true"></i> Вверх</a></div>
+				</div>
+			</div>
+		</ul>
+
+		<header id="header">
+			<h1>Лабораторная работа 1<span>Основы технологии &lt;canvas&gt;, создание полотна на веб-страницах</span></h1>
+		</header>
+	</div><!-- /box -->
+
+	<div class="container">
+		<div class="row">
+			<div class="content col-12">
+
+				<div><h2 class="section" id="M1">1. Основные понятия</h2></div>
+
+				<p>Canvas — это HTML элемент, использующийся для рисования графики средствами языков программирования (обычно это JavaScript). Он может, к примеру, использоваться для рисования графиков, создания фотокомпозиций, анимаций и даже обработки и рендеринга видео в реальном времени.
+				Изображение ниже является примером использования <code>&lt;canvas&gt;</code>.</p>
+
+				<div class="center"><iframe src="../sources/examples/frames/l1_main_canvas.html" class="iframemain"></iframe></div>
+
+				<p class="cuptionexample">Подсказка: нажмите в пределах полотна <code>canvas</code>!</p>
+				<p>Впервые <code>&lt;canvas&gt;</code> использовался компанией Apple для создания Mac OS X Dashboard, а затем был реализован в Web-браузерах. На сегодняшний день все основные браузеры поддерживют работу с <code>&lt;canvas&gt;</code>. Тег <code>&lt;canvas&gt;</code> часть спецификации WhatWG Web applications 1.0 также известной как HTML5.</p>
+				<p class="code">&lt;canvas id="tutorial" width="150" height="150"&gt;&lt;/canvas&gt;</p>
+				<p>Он выглядит как элемент <code>&lt;img&gt;</code>, но его отличие в том, что он не имеет атрибутов src и alt. Элемент <code>&lt;canvas&gt;</code> имеет только два атрибута - ширину и высоту. Оба они не обязательны и могут быть выставлены с использованием свойств DOM. Если атрибуты высоты и ширины не установлены, canvas будет по умолчанию шириной 300 пикселей и в высоту 150 пикселей. Вы так же можете выставить размеры произвольно в CSS, но во время рендеринга изображение будет масштабироваться в соответствии с его размером и ориентацией.</p>
+				<p>Атрибут <code>id</code> не специфичен для элемента <code>&lt;canvas&gt;</code>, но он может быть применен по умолчанию в атрибутах HTML, так как он может быть использован (почти) для любого элемента HTML (так же как класс). Это всегда отличная идея использовать <code>id</code>, так как это позволяет намного проще идентифицировать наш элемент в сценарии.</p>
+
+				<div><h2 class="section" id="M2">2. Запасное содержимое</h2></div>
+
+				<p>Из-за того, что старые браузеры (в особенности, версии Internet Explorer раннее чем 9) не поддерживают элемент <code>&lt;canvas&gt;</code>, Вам следует предоставить запасное содержимое для отображения этими браузерами.</p>
+				<p>Это очень просто: мы всего лишь предоставляем альтернативное содержимое внутри элемента <code>&lt;canvas&gt;</code>. Браузеры, которые не поддерживают <code>&lt;canvas&gt;</code> проигнорируют <code>container</code> и отобразят запасное содержимое этого тега. Браузеры, которые поддерживают <code>&lt;canvas&gt;</code> проигнорируют запасное содержимое, и просто нормально отобразят canvas.</p>
+				<p>Например, мы можем предоставить текстовое описание содержимого canvas или предоставить статичное изображение динамически отображаемого содержимого. Это может выглядеть как-то так:</p>
+
+				<p class="code">
+					&lt;canvas id="stockGraph" width="150" height="150"&gt;<br>
+					current stock price: $3.15 +0.15<br>
+					&lt;/canvas&gt;<br>
+					<br>
+					&lt;canvas id="clock" width="150" height="150"&gt;<br>
+					&lt;img src="images/clock.png" width="150" height="150" alt=""/&gt;<br>
+					&lt;/canvas&gt;<br>
+				</p>	
+
+				<p>В отличии от элемента <code>&lt;img&gt;</code>, элемент <code>&lt;canvas&gt;</code> требует закрывающийся тег (<code>&lt;/canvas&gt;</code>). Если этот тег не предоставлен, остаток документа будет считаться запасным контентом и не будет отображен.</p>
+				<p>Если запасной контент не нужен, простой  <code>&lt;canvas id="foo" ...&gt;&lt;/canvas&gt;</code> полностью совместим со всеми браузерами, что поддерживают <code>&lt;canvas&gt;</code>.</p>
+
+				<div><h2 class="section" id="M3">3. Рендеринг содержимого</h2></div>
+
+				<p>Элемент <code>&lt;canvas&gt;</code> в документе создается с фиксированным размером элемента для рисования, который может иметь один или несколько контекстов для рендеринга, создавая и манипулируя содержимым для показа. В данном руководстве мы сфокусируемся на 2D рендеринге. Другие контексты могут предоставлять разные типы рендеринга, к примеру WebGl использует 3D контекст основанный на OpenGL ES.</p>
+				<p>Холст изначально пустой и прозрачный. Первым делом скрипт получает доступ к контексту и отрисовывает его. Элемент <code>&lt;canvas&gt;</code> имеет метод <code>getContext()</code>, используется для получения контекста визуализации и ее функции рисования. <code>getContext()</code> принимает один параметр, тип контекста. Для 2D графики, которая охвачена этим руководством будем использвать метку <code>"2d"</code>.</p>
+
+				<p class="code">
+					var canvas = document.getElementById('tutorial');<br>
+					var ctx = canvas.getContext('2d');
+				</p>
+
+				<p>Мы находим элемент <code>canvas</code> по идентификатору, а затем вызываем метод <code>getContext()</code> с единственным параметром - строкой <code>2d</code>. Если <code>getContext()</code> возвращает ответ, мы получаем 2D-контекст холста для добавления объектов.</p>
+				<p>Ранее уже упоминалось, что в браузерах, которые не поддерживают <code>&lt;canvas&gt;</code> отображается запасное содержимое. Но помимо этого, определить, поддерживает ли браузер canvas, можно прямо из кода, проверив наличие метода <code>getContext()</code>. Код с запасным содержимым, который мы приводили Выше, становится следующим:</p>
+
+				<p class="code">
+					var canvas = document.getElementById('tutorial'); <br>
+					<br>
+					if (canvas.getContext){ <br>
+					  var ctx = canvas.getContext('2d'); <br>
+					  // drawing code here <br>
+					} else { <br>
+					  // canvas-unsupported code here <br>
+					}
+				</p>
+
+				<div><h2 class="section" id="M4">4. Скелет шаблона</h2></div>
+
+				<p>Здесь минимальный шаблон, который мы будем использовать как начальную точку для дальнейших примеров.</p>
+
+				<p class="code">
+					&lt;!DOCTYPE html&gt; <br>
+					&lt;html&gt; <br>
+					&lt;head&gt; <br>
+					&lt;title&gt;Canvas tutorial&lt;/title&gt; <br>
+					&lt;script type="text/javascript"&gt; <br>
+					function draw(){ <br>
+					var canvas = document.getElementById('tutorial'); <br>
+					if (canvas.getContext){ <br>
+					var ctx = canvas.getContext('2d'); <br>
+					} <br>
+					} <br>
+					&lt;/script&gt; <br>
+					&lt;style&gt; <br>
+					canvas { <br>
+					background-color: rgb(236,237,237); <br>
+					border: solid #DE5363; <br>
+					} <br>
+					&lt;/style&gt; <br>
+					&lt;/head&gt; <br>
+					&lt;body onload="draw();"&gt; <br>
+					&lt;canvas id="tutorial" width="250" height="150"&gt;&lt;/canvas&gt; <br>
+					&lt;/body&gt; <br>
+					&lt;/html&gt;
+				</p>
+
+				<p>Вставка скрипта внутрь HTML не является хорошей практикой. Помните об этом!</p>
+				<p>Скрипт вызывает функцию <code>draw()</code>, которая выполнится, когда страница закончит загрузку. Это делается путем события <code>load</code> в документе. Эта функция может быть вызвана как единожды, так и с помощью данных методов <code>window.setTimeout()</code>, <code>window.setInterval()</code>, или любым другим обработчиком события, когда страница будет загружена.</p>
+				<p>Вот как шаблон будет выглядеть в действии:</p>
+				
+				<canvas id="ex1canvas" width="250" height="150"></canvas>
+
+				<p>Размер холста можно вычислить программно через свойства <code>canvas.width</code> и <code>canvas.height</code>.</p>
+				<p>Рассмотрим следующий пример, на котором увидим область с чёрным прямоугольником. Это и есть тот самый холст, на котором нарисован прямоугольник, размеры которого равны размерам элемента <code>canvas</code>. Если бы мы не рисовали чёрный прямоугольник, то у нас был бы прозрачный холст. Размеры задаются в пикселях, а отсчёт идёт от верхнего левого угла. На холсте можно рисовать различные фигуры. Можно указать отрицательные значения для координат, ошибки не произойдёт, но смысла в этом нет - фигуры не будут видны на экране.</p>
+
+				<p class="code">
+					&lt;canvas height='320' width='480' id='first_example'&gt;Пример&lt;/canvas&gt; <br>
+					&lt;script&gt; <br>
+					var canvas = document.getElementById("first_example"); <br>
+					var context = canvas.getContext('2d'); <br>
+					context.fillRect(0, 0, canvas.width, canvas.height); <br>
+					&lt;/script&gt;
+				</p><br>
+
+				<canvas id="ex2canvas" width="250" height="150"></canvas>
+
+				<div><h2 class="section" id="M5">5. Прямоугольники</h2></div>
+
+				<p>Перед тем, как мы начнем рисовать, нам нужно поговорить о сетке <code>canvas</code> или координатной плоскости. Наш HTML каркас включал в себя элемент <code>canvas</code> 250 пикселей в ширину и 150 пикселей в высоту. Ниже можно увидеть <code>canvas</code> с сеткой, накладываемой по умолчанию. Обычно 1 единица на сетке соответствует 1 пикселю на <code>canvas</code>. Начало координат этой сетки расположено в верхнем левом углу в координате <code>(0,0)</code>. Все элементы размещены относительно этого начала. Таким образом, положение верхнего левого угла синего квадрата составляет <code>х</code> пикселей слева и <code>у</code> пикселей сверху, на координате <code>(х, у)</code>.</p>
+
+				<div class="center">
+					<img src="../sources/examples/pic/Canvas_default_grid.png" alt="" class="center">
+				</div>
+
+				<p>В отличие от SVG,<code>canvas</code> поддерживает только одну примитивную фигуру: прямоугольник. Все другие фигуры должны быть созданы комбинацией одного или большего количества контуров (<code>paths</code>), набором точек, соединенных в линии. К счастью в ассортименте рисования контуров у нас есть  функции, которые делают возможным составление очень сложных фигур.</p>
+
+				<p>Для начала, давайте посмотрим на простой пример, который рисует два пересекающихся прямоугольника, один из которых имеет прозрачность alpha. Далее изучим, как это работает.</p>
+
+				<p class="code">
+					&lt;!DOCTYPE html&gt; <br>
+					&lt;html&gt; <br>
+					&lt;head&gt; <br>
+					&lt;script type="application/javascript"&gt; <br>
+					function draw() { <br>
+					var canvas = document.getElementById("excanvas"); <br>
+					if (canvas.getContext) { <br>
+					var ctx = canvas.getContext("2d"); <br>
+					<br>
+					ctx.fillStyle = "rgb(238, 16, 68)"; <br>
+					ctx.fillRect (10, 10, 55, 50); <br>
+					<br>
+					ctx.fillStyle = "rgba(0, 0, 0, 0.5)"; <br>
+					ctx.fillRect (30, 30, 55, 50); <br>
+					} <br>
+					} <br>
+					&lt;/script&gt; <br>
+					&lt;style&gt; <br>
+					canvas { <br>
+					background-color: rgb(236,237,237); <br>
+					border: solid #DE5363; <br>
+					} <br>
+					&lt;/style&gt; <br>
+					&lt;/head&gt; <br>
+					&lt;body onload="draw();"&gt; <br>
+					&lt;canvas id="excanvas" width="250" height="150"&gt;&lt;/canvas&gt; <br>
+					&lt;/body&gt; <br>
+					&lt;/html&gt;
+				</p>
+
+				<p>После создания объекта context пример рисует 2 прямоугольника шириной в 65 пикселей и высотой в 50, с координатами левого верхнего угла (10, 10) и (30, 30) соответственно.</p>
+
+				<canvas id="ex3canvas" width="250" height="150"></canvas>
+
+				<p>Теперь давайте разберемся как это работает. В интерфейсе холста форму можно залить, что означает, что занимаемая ею область будет закрашена нужным цветом или шаблоном, или же можно сделать <code>stroke</code> – обвести область линией по краю. Та же терминология используется в SVG. </p>
+				<p>Метод <code>fillRect</code> заливает прямоугольник. Он принимает координаты левого верхнего угла x,y, затем ширину и высоту. Схожий метод <code>strokeRect</code> рисует периметр прямоугольника.</p>
+				<p>Больше у методов параметров нет. Цвет заливки, толщина обводки и другие параметры определяются не аргументами метода (как можно было бы ожидать), а свойствами объекта <code>context</code>.</p>
+				<p>Задав <code>fillStyle</code>, вы меняете способ, которым заливаются формы. Его можно установить в строку, обозначающую цвет, и в любой цвет, который понимает CSS.</p>
+				<p>Свойство <code>strokeStyle</code> работает так же, но определяет цвет, которым будет нарисована обводка. Толщина линии определяется свойством <code>lineWidth</code>, которое может содержать любое положительное число.</p>
+				<p><code>strokeRect(x, y, width, height)</code> - рисование прямоугольного контура.</p>
+				<p><code>clearRect(x, y, width, height)</code> - очистка  прямоугольной области, делая содержимое совершенно прозрачным.</p>
+				<p class="code">
+					function draw() { <br>
+					var canvas = document.getElementById('canvas'); <br>
+					if (canvas.getContext) { <br>
+					var ctx = canvas.getContext('2d'); <br>
+					<br>
+					ctx.fillRect(25,25,100,100); <br>
+					ctx.clearRect(45,45,60,60); <br>
+					ctx.strokeRect(50,50,50,50); <br>
+					} <br>
+					}
+				</p>
+				
+					<img src="../sources/examples/pic/squares.png" alt="" class="center">
+				
+
+				<div><h2 class="section" id="M6">6. Линии</h2></div>
+
+				<p>Для создания линии используя HTML5 Canvas, мы будем использовать методы  <code>beginPath()</code>, <code>moveTo(</code>), <code>lineTo(),</code> и <code>stroke()</code>.</p>
+				<p><code>beginPath()</code> - объявляем, что начинаем новый контур.</p>
+				<p><code>moveTo(x,y)</code> - задаем текущие положение на холсте к координатам (x, y).</p>
+				<p><code>lineTo(x,y)</code> - рисует линию от текущего положения на холсте к заданному.</p>
+				<p><code>stroke()</code> - делает нарисованные контуры видимыми.</p>
+				<p class="code">
+					&lt;!DOCTYPE HTML&gt; <br>
+					&lt;html&gt; <br>
+					&lt;head&gt; <br>
+					&lt;style&gt; <br>
+					body { <br>
+					margin: 0px; <br>
+					padding: 0px; <br>
+					} <br>
+					#myCanvas { <br>
+					margin: 15px; <br>
+					border: 1px solid #9C9898; <br>
+					} <br>
+					&lt;/style&gt; <br>
+					&lt;script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"&gt;&lt;/script&gt; <br>
+					&lt;script&gt; <br>
+					$(function() { <br>
+					var canvas = document.getElementById("myCanvas"); <br>
+					if (canvas.getContext){ <br>
+					var context = canvas.getContext("2d"); <br>
+					 <br>
+					context.beginPath(); <br>
+					context.moveTo(100, 150); <br>
+					context.lineTo(450, 50); <br>
+					context.stroke(); <br>
+					} <br>
+					else { <br>
+					alert('Ваш браузер не поддерживает canvas') <br>
+					} <br>
+					}); <br>
+					&lt;/script&gt; <br>
+					&lt;/head&gt; <br>
+					&lt;body&gt; <br>
+					&lt;canvas id="myCanvas" width="578" height="200"&gt;&lt;/canvas&gt; <br>
+					&lt;/body&gt; <br>
+					&lt;/html&gt;
+				</p>	
+
+				<p>Для того чтоб задать толщину линии используется <code>lineWidth [=value]</code>.</p>
+
+				<p class="code">
+					&lt;!DOCTYPE HTML&gt; <br>
+					&lt;html&gt; <br>
+					&lt;head&gt; <br>
+					&lt;style&gt; <br>
+					body { <br>
+					margin: 0px; <br>
+					padding: 0px; <br>
+					} <br>
+					#myCanvas { <br>
+					margin: 15px; <br>
+					border: 1px solid #9C9898; <br>
+					} <br>
+					&lt;/style&gt; <br>
+					&lt;script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"&gt;&lt;/script&gt; <br>
+					&lt;script&gt; <br>
+					$(function() { <br>
+					var canvas = document.getElementById("myCanvas"); <br>
+					if (canvas.getContext){ <br>
+					var context = canvas.getContext("2d"); <br>
+					 <br>
+					context.beginPath(); <br>
+					context.moveTo(100, 150); <br>
+					context.lineTo(450, 50); <br>
+					<code>context.lineWidth = 15;</code> <br>
+					context.stroke(); <br>
+					} <br>
+					else { <br>
+					alert('Ваш браузер не поддерживает canvas') <br>
+					} <br>
+					}); <br>
+					&lt;/script&gt; <br>
+					&lt;/head&gt; <br>
+					&lt;body&gt; <br>
+					&lt;canvas id="myCanvas" width="578" height="200"&gt;&lt;/canvas&gt; <br>
+					&lt;/body&gt; <br>
+					&lt;/html&gt;
+				</p>
+
+				<p>Цвет HTML5 Canvas линии задается с использованием <code>strokeStyle</code>.</p>
+
+				<p class="code">
+					context.strokeStyle = "#ff0000"; // цвет линии
+				</p>
+
+				<p>Оформление концов линий происходит с помощью <code>lineCap[=value]</code>. Доступны три значения: <code>butt</code> (используется по умолчанию), <code>round</code>, <code>square</code>.</p>
+
+				<div class="center">
+					<img src="../sources/examples/pic/linesexample.png" alt="" class="center">
+				</div>
+
+				<p>При использовании значений <code>round</code> или <code>square</code>, фактическая длина линии увеличивается на значение <code>lineWidth</code> (с двух сторон линий добавляются отрезки длинной <code>lineWidth/2</code>). Т.е. если длина линии 200px а ширина 10px то к каждому концу прибавится по 5px, и конечная длина получится 210px.</p>
+
+				<h2 id="practic" class="practic">Практика</h2>
+
+				<p class="practictext">Цель работы: Практическое освоение технологии canvas, создание полотна на веб-странице и простейших фигур.</p>
+				<h2 class="section">Задание к лабораторной работе №1:</h2>
+
+				<p class="subsection">Задание №1:</p>
+				<ul class="practictodo">
+					<li> Создайте местоположение для своих последующих работ. Путь из папок должен выглядеть так: <code>Группа&nbsp;/&nbsp;Фамилия.Имя&nbsp;/</code></li>
+					<li>Создайте пустой проект, в котором код HTML, CSS, JS будут в разных файлах. Добавьте скелет HTML-документу.</li>
+				</ul>
+					<p class="subsection">Задание №2:</p>
+				<ul class="practictodo">
+					<li>Создайте веб-страницу с canvas в котором будут прямоугольники и линии (не менее 4 каждого элемента), задайте им:</li>
+					<ul>
+						<li>Координаты;</li>
+						<li>Разные длину, ширину;</li>
+						<li>Цвет, прозрачность;</li>
+						<li>Сделайте несколько фигур полыми внутри.</li>
+					</ul>
+				</ul>
+				<p class="subsection">Задание №3:</p>
+				<ul class="practictodo">
+					<li>Создайте еще один canvas, в котором смоделируйте полотно в виде экрана осциллографа с помощью изученных элементов. Примерная сетка:
+						<img style="padding-bottom: 0px;" src="../sources/examples/pic/grid.png" alt="" class="center practicpic">
+					</li>
+				</ul>
+
+
+				<h2 class="section">Отчет по лабораторной работе должен содержать:</h2>
+
+				<ul class="practictodo">
+					<li>Скриншоты и описание выполнения лабораторной работы попунктно;</li>
+					<li>Полный скриншот получившейся веб-страницы;</li>
+					<li>HTML, CSS и JavaScript код с необходимыми объяснениями.</li>
+				</ul>
+
+				<p class="gotop"><a href="#header">Вернуться в начало</a></p>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer">
+		<div class="container">
+			<div class="row justify-content-between">
+				<div class="col-12 col-sm-auto">
+					Dnipro National University |  Laboratory Workshop &copy; 2020
+				</div>
+				<div class="col-12 col-sm-auto">
+					Designed by Zymeth
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="../sources/js/canvastree.js"></script>
+	<script src="../sources/examples/js/ex2canvas.js"></script>
+	<script src="../sources/examples/js/ex3canvas.js"></script>
+	<script src="../sources/js/classie.js"></script>
+	<script src="../sources/js/gnmenu.js"></script>
+	<script src="../sources/js/example.js"></script>
+	<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/6859/tween.min_1.js'></script>
+
+	<script>
+		new gnMenu(document.getElementById('gn-menu'));
+	</script>
+
+</body>
+</html>
